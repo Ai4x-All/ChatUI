@@ -2,14 +2,14 @@ import React from 'react';
 
 export interface BubbleProps extends React.HTMLAttributes<HTMLDivElement> {
   type?: string;
-  content?: React.ReactNode;
+  customContent?: React.ReactNode; // 重命名为 customContent
 }
 
 export const Bubble = React.forwardRef<HTMLDivElement, BubbleProps>((props, ref) => {
-  const { type = 'text', content, children, ...other } = props;
+  const { type = 'text', customContent, children, ...other } = props;
   return (
     <div className={`Bubble ${type}`} data-type={type} ref={ref} {...other}>
-      {content && <p>{content}</p>}
+      {customContent && <p>{customContent}</p>}
       {children}
     </div>
   );

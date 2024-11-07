@@ -158,7 +158,7 @@ const toolbar: ToolbarItemProps[] = [
 
 export default () => {
   // 消息列表
-  const { messages, appendMsg, setTyping, prependMsgs } = useMessages(initialMessages);
+  const { messages, appendMsg, prependMsgs } = useMessages(initialMessages);
   const { quickReplies, replace } = useQuickReplies(defaultQuickReplies);
   const msgRef = React.useRef(null);
 
@@ -178,7 +178,7 @@ export default () => {
       });
 
       setTimeout(() => {
-        setTyping(true);
+        // setTyping(true);
       }, 1000);
 
       // 模拟回复消息
