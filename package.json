@@ -1,6 +1,6 @@
 {
   "name": "@Ai4x-All/chatui-core-private",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "The React library for Chatbot UI",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -13,7 +13,7 @@
     "lib"
   ],
   "scripts": {
-    "publish": "npm run publish",
+    "publish": "npm run js:cjs && npm run js:esm && npm run build:types && npm publish",
     "clean": "rimraf dist && rimraf es && rimraf lib",
     "prebuild": "npm run clean",
     "prefix": "cross-env NODE_ENV=production postcss dist/index.css -o dist/index.css",
