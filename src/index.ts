@@ -143,5 +143,8 @@ export type { FileCardProps } from './components/FileCard';
 export { Goods } from './components/Goods';
 export type { GoodsProps } from './components/Goods';
 
+export { Composer } from './components/Composer';
+export type { ComposerProps, ComposerHandle } from './components/Composer';
+
 export { Chat as default } from './components/Chat';
 export type { ChatProps } from './components/Chat';
