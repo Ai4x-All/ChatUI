@@ -69,9 +69,7 @@ export default function Playground({
   // 将该方法暴露给外部
   useImperativeHandle(LiveKitRef, (): any => ({
     // 外部可调用 ref.current.sendChat("hello")，内部实际会调用 useChat() 提供的 send()
-    sendChat: (text: string) => {
-      sendChatInternal(text);
-    },
+    sendChat: (text: string) => sendChatInternal(text),
   }), []);
 
   return <></>;

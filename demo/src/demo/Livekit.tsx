@@ -73,7 +73,9 @@ export default () => {
       attachments: [], // 包含附件
     };
     // @ts-ignore
-    LiveKitRef.current.sendChat(JSON.stringify(newMessage));
+    LiveKitRef.current.sendChat(JSON.stringify(newMessage)).then(res => {
+      console.log(res);
+    });
   };
 
   function renderMessageContent(msg: MessageProps) {
