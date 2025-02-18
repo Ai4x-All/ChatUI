@@ -1,5 +1,6 @@
 import React from 'react';
 import { LiveKitRoom, RoomAudioRenderer, StartAudio } from '@livekit/components-react';
+import '@livekit/components-styles';
 import { ConnectionState } from 'livekit-client';
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
