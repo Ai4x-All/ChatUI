@@ -37,8 +37,8 @@ export default function Playground({
   useEffect(() => {
     if (roomState === ConnectionState.Connected) {
       // 假设外部不会让它做更多事情时，可以省略
-      localParticipant.setCameraEnabled(config?.camera);
-      localParticipant.setMicrophoneEnabled(config?.mic);
+      localParticipant.setCameraEnabled(config.camera);
+      localParticipant.setMicrophoneEnabled(config.mic);
     }
   }, [localParticipant, roomState, config]);
 

@@ -10,6 +10,8 @@ export interface LiveKitContainerProps {
   wsUrl: string;
   token: string;
   room: string;
+  style?: any;
+  className?: any;
   children?: React.ReactNode;
   config?: any, // 房间配置项
   // 这里放各种外部回调
@@ -24,6 +26,7 @@ export interface LiveKitContainerProps {
   onParticipantAttributesChanged?: (payload: any, participant: any) => void;
   onRoomMetadataChanged?: (state: any) => void;
   // ...
+  [key: string]: any;
 }
 
 export const LiveKitContainer = React.forwardRef<HTMLDivElement, LiveKitContainerProps>((props, ref) => {
@@ -31,9 +34,11 @@ export const LiveKitContainer = React.forwardRef<HTMLDivElement, LiveKitContaine
     wsUrl,
     token,
     room,
+    style = {},
+    className = {},
     config = {
-      camera: false,
-      mic: false,
+      camera: 0,
+      mic: 0,
     },
     onDataReceived,
     rpcMethod=['command'],
@@ -45,6 +50,7 @@ export const LiveKitContainer = React.forwardRef<HTMLDivElement, LiveKitContaine
     onParticipantAttributesChanged,
     onRoomMetadataChanged,
     children,
+    ...otherProps
   } = props;
 
   return (
@@ -52,6 +58,9 @@ export const LiveKitContainer = React.forwardRef<HTMLDivElement, LiveKitContaine
       {token ? (
         // @ts-ignore
         <LiveKitRoom
+          {...otherProps}
+          style={style}
+          className={className}
           ref={ref}
           key={room}
           token={token}
