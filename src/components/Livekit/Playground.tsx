@@ -1,4 +1,3 @@
-'use client';
 import { useChat, useConnectionState, useDataChannel, useLocalParticipant } from '@livekit/components-react';
 import { ConnectionState, RpcInvocationData } from 'livekit-client';
 import React, { useEffect, useImperativeHandle } from 'react';

@@ -3,6 +3,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
+import postcss from 'rollup-plugin-postcss';
 
 const name = 'ChatUI';
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
@@ -21,6 +22,11 @@ export default {
     terser({
       output: { comments: false },
       compress: { drop_console: true },
+    }),
+    postcss({
+      // 如果需要，可在此配置自动添加前缀、压缩等
+      extensions: ['.css'],
+      inject: true, // 或者使用 extract: true 单独抽离 CSS 文件
     }),
   ],
   output: {
