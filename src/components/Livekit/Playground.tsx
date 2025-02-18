@@ -58,7 +58,9 @@ export default function Playground({
           method,
           async (data: RpcInvocationData) => {
             console.log(`Received greeting from ${data.callerIdentity}: ${data.payload}`);
-            rpcMethodCallback && rpcMethodCallback(method, data);
+            if(rpcMethodCallback){
+              rpcMethodCallback(method, data)
+            }
             return `Hello, ${data.callerIdentity}!`;
           },
         );

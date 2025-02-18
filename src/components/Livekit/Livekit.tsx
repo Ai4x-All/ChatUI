@@ -76,9 +76,6 @@ export const LiveKitContainer = React.forwardRef<HTMLDivElement, LiveKitContaine
             onRoomMetadataChanged={onRoomMetadataChanged}
             onTrackSubscribed={onTrackSubscribed}
             onParticipantAttributesChanged={onParticipantAttributesChanged} />
-          <RoomAudioRenderer />
-          {/*@ts-ignore*/}
-          <StartAudio label="点击以启用音频" />
           <Playground LiveKitRef={ref}
                       config={config}
                       onConnectionStateChanged={onConnectionStateChanged}
@@ -86,6 +83,9 @@ export const LiveKitContainer = React.forwardRef<HTMLDivElement, LiveKitContaine
                       rpcMethod={rpcMethod}
                       rpcMethodCallback={rpcMethodCallback} />
           {children}
+          <RoomAudioRenderer />
+          {/*@ts-ignore*/}
+          <StartAudio label="点击以启用音频" />
         </LiveKitRoom>
       ) : (
         <>连接中</>
