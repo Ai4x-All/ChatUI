@@ -1,3 +1,4 @@
+/*
 // App.tsx (React 示例)
 import React, { useEffect, useRef, useState } from 'react';
 import { Input, LiveKitSDK } from '../../../src';
@@ -84,8 +85,11 @@ export default function App() {
       <Input rows={3} value={value} onChange={setValue} placeholder="请输入" />
       <button onClick={handleSendMessage}>Send Data</button>
 
-      {/* 如果要渲染远端音视频，可以遍历 sdkRef.current?.getParticipants() */}
-      {/* 并把对应 track attach 到 <video> / <audio> 或其他UI */}
+      {/!* 如果要渲染远端音视频，可以遍历 sdkRef.current?.getParticipants() *!/}
+      {/!* 并把对应 track attach 到 <video> / <audio> 或其他UI *!/}
     </div>
   );
 }
+*/
+
+export default () => {return <></>}
