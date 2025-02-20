@@ -1,21 +1,21 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
-  ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
-  rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
-    "@typescript-eslint/no-explicit-any": "off", // ts: 允许使用any
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/no-inner-declarations": "off",
+  parserOptions: {
+    ecmaVersion: 2020,
+    project: './tsconfig.json',
   },
-}
+  extends: [
+    'airbnb/hooks',
+    'airbnb-typescript',
+    'prettier',
+  ],
+  env: {
+    browser: true,
+    jest: true,
+  },
+  plugins: ['compat', 'import', 'jsx-a11y', 'react', 'react-hooks'],
+  rules: {},
+  settings: {
+    polyfills: ['IntersectionObserver', 'Promise'],
+  },
+};
