@@ -18,7 +18,7 @@ export interface LiveKitContainerProps {
   // 这里放各种外部回调
   // 根据自己需要定义，比如 onDataReceived, onParticipantConnected, onConnectionStateChanged ...
   onDataReceived?: (msg: any) => void;
-  rpcMethod?: [];
+  rpcMethod?: any;
   rpcMethodCallback?: (method: string, rpcMethod: any) => void;
   onConnectionStateChanged?: (state: ConnectionState) => void;
   onParticipantConnected?: (identity: string) => void;
