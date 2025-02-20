@@ -149,5 +149,3 @@ export type { ComposerProps, ComposerHandle } from './components/Composer';
 export { Chat as default } from './components/Chat';
 export type { ChatProps } from './components/Chat';
 
-// export { LiveKitSDK } from './components/Livekit';
-

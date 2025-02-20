@@ -35,9 +35,7 @@
     "clsx": "^1.1.1",
     "core-js": "^3.25.3",
     "dompurify": "^2.3.8",
-    "intersection-observer": "^0.12.2",
-    "livekit-client": "^2.6.0",
-    "livekit-server-sdk": "^2.8.0"
+    "intersection-observer": "^0.12.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
