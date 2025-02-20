@@ -182,7 +182,7 @@ export class LiveKitSDK {
       this.options.onTrackSubscribed?.(track, publication, participant);
     });
 
-    this.room.on(RoomEvent.DataReceived, (payload: any, participant: any, _kind:any,topic:any) => {
+    this.room.on(RoomEvent.DataReceived, (payload: any, _participant: any, _kind:any,topic:any) => {
       // 与 useDataChannel 类似，在这里收到数据，然后回调出去
       this.options.onDataReceived?.(payload, topic);
     });
