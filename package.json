@@ -107,11 +107,11 @@
   ],
   "homepage": "https://chatui.io/",
   "bugs": {
-    "url": "https://github.com/alibaba/ChatUI/issues"
+    "url": "https://github.com/Ai4x-All/ChatUI/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ChatUI"
+    "url": "https://github.com/Ai4x-All/ChatUI"
   },
   "author": "zhangkaiyue <zhangkaiyue@ai4x.com.cn>",
   "license": "MIT",
