@@ -1,0 +1,71 @@
+
+/* 容器中附件的样式 */
+.message-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: self-end;
+  gap: 12px;
+  &.left {
+    align-items: self-start;
+  }
+
+  .FileCard {
+    width: 240px !important;
+  }
+}
+
+
+.messageContent {
+  /* 确保内容不会超出对话框 */
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+/* 使图片在对话框内自适应 */
+.messageContent img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px; /* 可选：添加圆角 */
+}
+
+/* 使表格在对话框内自适应 */
+.messageContent table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto;
+  display: block;
+  &::-webkit-scrollbar {
+    display: block;
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb:horizontal {
+    width: 6px;
+    background-color: #1867D3;
+    -webkit-border-radius: 3px;
+  }
+}
+
+.messageContent th,
+.messageContent td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  word-wrap: break-word;
+  white-space: nowrap; /* 禁止文字换行 */
+}
+
+.messageContent th {
+  background-color: #f2f2f2;
+}
+
+/* 响应式处理，确保表格在小屏幕上可滚动 */
+.messageContent .table-wrapper {
+  overflow-x: auto;
+}
+
+
+

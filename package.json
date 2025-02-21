@@ -1,6 +1,6 @@
 {
   "name": "@Ai4x-All/chatui-core-private",
-  "version": "2.0.9",
+  "version": "2.1.0",
   "description": "The React library for Chatbot UI",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -35,7 +35,9 @@
     "clsx": "^1.1.1",
     "core-js": "^3.25.3",
     "dompurify": "^2.3.8",
-    "intersection-observer": "^0.12.2"
+    "intersection-observer": "^0.12.2",
+    "react-markdown": "^9.0.1",
+    "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
@@ -109,10 +111,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ai4x-All/ChatUI"
+    "url": "https://github.com/Ai4x-All/ChatUI.git"
   },
   "author": "zhangkaiyue <zhangkaiyue@ai4x.com.cn>",
-  "license": "MIT",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   }

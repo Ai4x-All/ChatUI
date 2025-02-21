@@ -38,5 +38,6 @@ export default {
       'react-dom': 'ReactDOM',
     },
     intro: `exports.version = '${pkg.version}';`,
+    inlineDynamicImports: true, // This forces everything into a single file
   },
 };
