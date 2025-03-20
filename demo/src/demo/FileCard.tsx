@@ -9,7 +9,10 @@ const file = new File(['foo'], 'foo.txt', {
 export default () => (
   <DemoPage>
     <DemoSection title="基础用法">
-      <FileCard file={file} />
+      <FileCard file={file} onClick={() => {
+        console.log('点击文件，查看详情');
+        console.log(file);
+      }} />
     </DemoSection>
     <DemoSection title="指定拓展名">
       <FileCard file={file} extension="pdf" />

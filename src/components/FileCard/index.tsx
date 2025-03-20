@@ -7,7 +7,7 @@ import { Text } from '../Text';
 import getExtName from '../../utils/getExtName';
 import prettyBytes from '../../utils/prettyBytes';
 
-export interface FileCardProps {
+export interface FileCardProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   file: File;
   extension?: string;
@@ -15,12 +15,12 @@ export interface FileCardProps {
 }
 
 export const FileCard = React.forwardRef<HTMLDivElement, FileCardProps>((props, ref) => {
-  const { className, file, extension, children } = props;
+  const { className, file, extension, children, ...other } = props;
   const { name, size } = file;
   const ext = extension || getExtName(name);
 
   return (
-    <Card className={clsx('FileCard', className)} size="xl" ref={ref}>
+    <Card className={clsx('FileCard', className)} size="xl" ref={ref} {...other}>
       <Flex>
         <div className="FileCard-icon" data-type={ext}>
           <Icon type="file" />

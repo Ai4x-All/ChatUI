@@ -14,13 +14,14 @@ import remarkGfm from 'remark-gfm';
 export interface MessageBubbleProps {
   message: MessageProps;
   getImageUrl?: (url: string) => any;
+  handleFileDetail?: (detail:any) => any;
 }
 
 // 动态导入 Attachment 组件
 const Attachment = lazy(() => import('./Attachment'));
 
 export const MessageBubble = React.forwardRef<HTMLDivElement, MessageBubbleProps> ((props, ref) => {
-  const { message, getImageUrl} = props
+  const { message, getImageUrl, handleFileDetail} = props
   const { type, content, attachments, position } = message;
 
   if (type === 'text' && attachments && attachments.length > 0) {
@@ -28,7 +29,7 @@ export const MessageBubble = React.forwardRef<HTMLDivElement, MessageBubbleProps
       <div className={`message-attachments ${position}`} key={message.id} ref={ref}>
         {attachments.map((attachment: any) => (
           <Suspense fallback={<div>加载附件...</div>} key={attachment.object_name}>
-            <Attachment attachment={attachment} getImageUrl={getImageUrl} />
+            <Attachment attachment={attachment} getImageUrl={getImageUrl} handleFileDetail={handleFileDetail} />
           </Suspense>
         ))}
         <Bubble>
