@@ -48,9 +48,8 @@ const Attachment: React.FC<{ attachment: any, getImageUrl?: (name: string) => {}
       }
       handleFileDetail?.(obj)
     }else {
-      message.error('暂不支持预览')
+      console.log('暂不支持预览')
     }
-
   }
 
 
