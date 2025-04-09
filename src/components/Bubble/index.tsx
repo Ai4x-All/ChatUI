@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface BubbleProps extends React.HTMLAttributes<HTMLDivElement> {
   type?: string;
-  content?: string | React.ReactNode | undefined | null | any; // content 的类型允许 string 或 ReactNode
+  content?: string;
 }
 
 export const Bubble = React.forwardRef<HTMLDivElement, BubbleProps>((props, ref) => {

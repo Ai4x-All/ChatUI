@@ -3,6 +3,7 @@ import 'intersection-observer';
 export { default as clsx } from 'clsx';
 export { default as DOMPurify } from 'dompurify';
 
+export { default as canUse } from './utils/canUse';
 export { importScript } from './utils/importScript';
 export { lazyComponent } from './utils/lazyComponent';
 export { mountComponent } from './utils/mountComponent';
@@ -30,11 +31,20 @@ export { MessageBubble } from './components/BubbleAttachment';
 export type { MessageBubbleProps, Attachment, ExtendedMessageProps } from './components/BubbleAttachment';
 export { Button } from './components/Button';
 export type { ButtonProps } from './components/Button';
-export { Card, CardMedia, CardTitle, CardContent, CardText, CardActions } from './components/Card';
+export {
+  Card,
+  CardMedia,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardText,
+  CardActions,
+} from './components/Card';
 export type {
   CardProps,
   CardSize,
   CardMediaProps,
+  CardHeaderProps,
   CardTitleProps,
   CardContentProps,
   CardTextProps,
@@ -104,6 +114,8 @@ export type {
   QuickReplyProps,
   QuickReplyItemProps,
 } from './components/QuickReplies';
+export { Quote } from './components/Quote';
+export type { QuoteProps } from './components/Quote';
 export { Radio, RadioGroup } from './components/Radio';
 export type { RadioProps, RadioGroupProps, RadioValue } from './components/Radio';
 export { RateActions } from './components/RateActions';
@@ -111,6 +123,8 @@ export type { RateActionsProps } from './components/RateActions';
 export type { RecorderHandle } from './components/Recorder';
 export { RichText } from './components/RichText';
 export type { RichTextProps } from './components/RichText';
+export { ScrollGrid } from './components/ScrollGrid';
+export type { ScrollGridProps } from './components/ScrollGrid';
 export { ScrollView } from './components/ScrollView';
 export type { ScrollViewProps } from './components/ScrollView';
 export { Search } from './components/Search';

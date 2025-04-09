@@ -14,6 +14,7 @@ export interface ModalProps {
   baseClass?: string;
   className?: string;
   title?: string;
+  subTitle?: string;
   titleId?: string;
   showClose?: boolean;
   autoFocus?: boolean;
@@ -24,6 +25,7 @@ export interface ModalProps {
   vertical?: boolean;
   btnVariant?: ButtonProps['variant'];
   bgColor?: string;
+  avatar?: string;
   onClose?: () => void;
   onBackdropClick?: () => void;
   children?: React.ReactNode;
@@ -45,6 +47,7 @@ export const Base = React.forwardRef<BaseModalHandle, ModalProps>((props, ref) =
     active,
     className,
     title,
+    subTitle,
     showClose = true,
     autoFocus = true,
     backdrop = true,
@@ -54,6 +57,7 @@ export const Base = React.forwardRef<BaseModalHandle, ModalProps>((props, ref) =
     vertical = true,
     btnVariant,
     bgColor,
+    avatar,
     children,
     onBackdropClick,
     onClose,
@@ -100,6 +104,7 @@ export const Base = React.forwardRef<BaseModalHandle, ModalProps>((props, ref) =
   if (!didMount) return null;
 
   const isPopup = baseClass === 'Popup';
+  const hasAvatar = avatar && baseClass === 'Modal';
 
   return createPortal(
     <div
@@ -118,15 +123,20 @@ export const Base = React.forwardRef<BaseModalHandle, ModalProps>((props, ref) =
         className={clsx(`${baseClass}-dialog`, { 'pb-safe': isPopup && !actions })}
         data-bg-color={bgColor}
         data-height={isPopup && height ? height : undefined}
+        data-has-avatar={hasAvatar}
         role="dialog"
         aria-labelledby={titleId}
         aria-modal
       >
         <div className={`${baseClass}-content`}>
+          {hasAvatar && (
+            <div className={`${baseClass}-avatar`} style={{ '--avatar': `url(${avatar})` } as React.CSSProperties} />
+          )}
           <div className={`${baseClass}-header`}>
             <h5 className={`${baseClass}-title`} id={titleId}>
               {title}
             </h5>
+            {isPopup && subTitle && <h6 className={`${baseClass}-subtitle`}>{subTitle}</h6>}
             {showClose && onClose && (
               <IconButton
                 className={`${baseClass}-close`}
