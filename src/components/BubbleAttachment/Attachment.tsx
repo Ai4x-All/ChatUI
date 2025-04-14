@@ -68,9 +68,9 @@ const Attachment: React.FC<{ attachment: any, getImageUrl?: (name: string) => {}
 
           html = (
             <Bubble type="image" key={attachment.object_name}
-                    style={{background: 'transparent', textAlign: 'right'}}>
+                    style={{ background: 'transparent', textAlign: 'right' }}>
               <img onClick={() => fileDetail(attachment)} src={file} alt="" />
-              <a onClick={() => download(attachment)}>下载</a>
+              <p className="download"><a onClick={() => download(attachment)}>下载</a></p>
             </Bubble>
           );
         } else {

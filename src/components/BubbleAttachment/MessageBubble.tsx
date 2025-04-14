@@ -1,9 +1,12 @@
 // components/MessageBubble.tsx
 import ReactMarkdown from 'react-markdown';
-import React, { lazy, Suspense } from 'react';
-import { ExtendedMessageProps as MessageProps } from './types';
+import ReactDOMServer from 'react-dom/server';
+import React, {lazy, Suspense} from 'react';
+import {ExtendedMessageProps as MessageProps} from './types';
 import { Bubble } from '../Bubble';
-
+import {Typing, } from "../Typing"
+import {TypingBubble} from "../TypingBubble"
+import './style.less'
 // 导入所需的插件
 import remarkGfm from 'remark-gfm';
 // import rehypeRaw from 'rehype-raw';
@@ -24,6 +27,7 @@ const Attachment = lazy(() => import('./Attachment'));
 export const MessageBubble = React.forwardRef<HTMLDivElement, MessageBubbleProps> ((props, ref) => {
   const { message, getImageUrl, handleFileDetail, handleDetail} = props
   const { type, content, attachments, position } = message;
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   const CustomLink = ({ href, children, ...props }:any) => {
     const handleClick = (event:any) => {
       event.preventDefault(); // 阻止默认跳转行为
@@ -41,6 +45,20 @@ export const MessageBubble = React.forwardRef<HTMLDivElement, MessageBubbleProps
       </a>
     );
   };
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const mdHtml = (content: any) => (
+    <ReactMarkdown
+      className="messageContent"
+      components={{
+        a: CustomLink, // 替换默认的 <a> 渲染器
+      }}
+      remarkPlugins={[remarkGfm /*, remarkMath */]}
+      // rehypePlugins={[rehypeRaw /*, rehypeKatex */]}
+    >
+      {content}
+    </ReactMarkdown>
+  )
+
   if (type === 'text' && attachments && attachments.length > 0) {
     return (
       <div className={`message-attachments ${position}`} key={message.id} ref={ref}>
@@ -52,40 +70,36 @@ export const MessageBubble = React.forwardRef<HTMLDivElement, MessageBubbleProps
         ))}
         <Bubble>
           {content &&
-            <ReactMarkdown
-              className="messageContent"
-              components={{
-                a: CustomLink, // 替换默认的 <a> 渲染器
-              }}
-              // 添加插件
-              remarkPlugins={[remarkGfm /*, remarkMath */]}
-              // rehypePlugins={[rehypeRaw /*, rehypeKatex */]}
-              // 如果使用数学公式，还需要添加对应的 CSS
-            >
-              {content}
-            </ReactMarkdown>
+            mdHtml(content)
           }
         </Bubble>
       </div>
     );
   }
 
+  // 转换函数：将 Markdown 转换为 HTML 字符串
+  function markdownToHtml(markdownText: any) {
+    return ReactDOMServer.renderToStaticMarkup(
+      mdHtml(markdownText)
+    );
+  }
+
+
   switch (type) {
     case 'text':
       return (
         <Bubble>
-          <ReactMarkdown
-            components={{
-              a: CustomLink, // 替换默认的 <a> 渲染器
-            }}
-            className="messageContent"
-            remarkPlugins={[remarkGfm /*, remarkMath */]}
-            // rehypePlugins={[rehypeRaw /*, rehypeKatex */]}
-          >
-            {content}
-          </ReactMarkdown>
+          {mdHtml(content)}
         </Bubble>
       );
+    case 'stream':
+      return (
+        <TypingBubble content={content}
+                      messageRender={markdownToHtml} isRichText
+                      options={{step: [1, 6], interval: 100}}/>
+      )
+    case 'typing':
+      return <Typing/>;
     case 'image':
       return (
         <Bubble type="image">
