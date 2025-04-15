@@ -49,7 +49,7 @@ export const CustomComposer = React.forwardRef<ComposerHandle, CustomComposerPro
               {...composerProps}
               ref={ref}
             />
-            <p className="custom-composer-tip">天赋智源提醒您，智能体也可能会犯错，请核查重要信息。</p>
+            <p className="custom-composer-tip">智能体也可能会犯错，请核查重要信息。</p>
           </div>
         );
     }

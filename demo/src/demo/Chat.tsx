@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Chat, {
   Bubble,
@@ -20,6 +20,7 @@ import Chat, {
   ToolbarItemProps,
   RateActions,
   useTitleTyping,
+  CustomComposer
 } from '../../../src';
 import OrderSelector from './OrdderSelector';
 
@@ -363,7 +364,11 @@ export default () => {
         return null;
     }
   }
-
+  // 使用 useCallback 创建 Composer 渲染函数
+  const renderComposer = useCallback((props: any) => (
+    <CustomComposer {...props} pendingAttachments={[]} onDeleteAttachment={() => {}}
+                    onSend={() => {}}/>
+  ), []);
   return (
     <Chat
       colorScheme="auto"
@@ -404,6 +409,7 @@ export default () => {
       onQuickReplyClick={handleQuickReplyClick}
       onSend={handleSend}
       onImageSend={() => Promise.resolve()}
+      Composer={renderComposer}// 使用稳定的渲染函数
     />
   );
 };
