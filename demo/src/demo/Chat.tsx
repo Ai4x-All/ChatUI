@@ -2,25 +2,25 @@ import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Chat, {
   Bubble,
-  MessageProps,
-  useMessages,
-  QuickReplyItemProps,
-  useQuickReplies,
-  Card,
-  CardMedia,
-  CardTitle,
-  CardText,
-  CardActions,
   Button,
-  List,
-  ListItem,
+  Card,
+  CardActions,
+  CardMedia,
+  CardText,
+  CardTitle,
+  CustomComposer,
   Flex,
   FlexItem,
+  List,
+  ListItem,
+  MessageProps,
+  QuickReplyItemProps,
+  RateActions,
   ScrollView,
   ToolbarItemProps,
-  RateActions,
+  useMessages,
+  useQuickReplies,
   useTitleTyping,
-  CustomComposer
 } from '../../../src';
 import OrderSelector from './OrdderSelector';
 
@@ -401,7 +401,19 @@ export default () => {
       toolbar={toolbar}
       messagesRef={msgRef}
       onToolbarClick={handleToolbarClick}
-      recorder={{ canRecord: true }}
+      recorder={{
+        canRecord: true,
+        onStart: () => {
+          console.log('开始录音');
+        },
+        onEnd: () => {
+          console.log('录音结束');
+        },
+        onCancel: () => {
+          console.log('主动取消');
+        }
+      }
+      }
       wideBreakpoint="800px"
       messages={messages}
       renderMessageContent={renderMessageContent}

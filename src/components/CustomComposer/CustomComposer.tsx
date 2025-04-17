@@ -1,18 +1,23 @@
 // CustomComposer.tsx
 import React from 'react';
-import {Composer, ComposerProps, ComposerHandle} from "../Composer";
-import {FileCard} from "../FileCard"
-import {Loading} from "../Loading"
+import { Composer, ComposerHandle, ComposerProps } from '../Composer';
+import { FileCard } from '../FileCard';
+import { Loading } from '../Loading';
 
 export interface CustomComposerProps extends ComposerProps {
-    pendingAttachments: any[];
-    onDeleteAttachment: (id: string) => void;
+  tipsData?: any[];
+  pendingAttachments: any[];
+  onDeleteAttachment: (id: string) => void;
 }
 
 export const CustomComposer = React.forwardRef<ComposerHandle, CustomComposerProps>(
-    ({pendingAttachments, onDeleteAttachment, ...composerProps}, ref) => {
-        return (
-          <div className="custom-composer-container">
+  ({ pendingAttachments, onDeleteAttachment, tipsData = [], ...composerProps }, ref) => {
+
+    return (
+      <>
+        {tipsData.length ? <div className="tips">{tipsData[0].message}</div> : null}
+
+        <div className="custom-composer-container">
             {pendingAttachments.length > 0 && (
               <div className="pending-attachments">
                 {pendingAttachments.map((attachment) => (
@@ -51,6 +56,7 @@ export const CustomComposer = React.forwardRef<ComposerHandle, CustomComposerPro
             />
             <p className="custom-composer-tip">智能体也可能会犯错，请核查重要信息。</p>
           </div>
-        );
+      </>
+    );
     }
 );
