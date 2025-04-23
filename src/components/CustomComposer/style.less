@@ -1,5 +1,5 @@
 .tips {
-  background-color: @black-1;
+  background-color: rgba(112, 162, 232, 0.8);
   position: absolute;
   width: calc(100% - 40px);
   margin-left: 20px;
@@ -12,6 +12,18 @@
   box-sizing: border-box;
   transition: all 1s ease;
   font-size: 14px;
+  display: flex;
+  .tips-avatar {
+    flex-shrink: 0;
+    align-self: end;
+  }
+  .tips-msg {
+    margin-left: 10px;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 .custom-composer-container {
   display: flex;

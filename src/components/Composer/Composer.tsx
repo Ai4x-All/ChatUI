@@ -37,6 +37,7 @@ export type ComposerProps = {
   onAccessoryToggle?: (isAccessoryOpen: boolean) => void;
   rightAction?: IconButtonProps;
   isX?: boolean;
+  showSendBtn?:boolean
 };
 
 export interface ComposerHandle {
@@ -62,6 +63,7 @@ export const Composer = React.forwardRef<ComposerHandle, ComposerProps>((props, 
     onToolbarClick,
     rightAction,
     inputOptions,
+    showSendBtn = true
   } = props;
 
   const [text, setText] = useState(initialText);
@@ -345,7 +347,7 @@ export const Composer = React.forwardRef<ComposerHandle, ComposerProps>((props, 
           <ComposerInput invisible={!isInputText} {...inputProps} />
           {!isInputText && <Recorder {...recorder} />}
         </div>
-        {!text && rightAction && <Action {...rightAction} />}
+        {rightAction && <Action {...rightAction} />}
         {hasToolbar && (
           <Action
             className={clsx('Composer-toggleBtn', {
@@ -356,7 +358,7 @@ export const Composer = React.forwardRef<ComposerHandle, ComposerProps>((props, 
             aria-label={isAccessoryOpen ? '关闭工具栏' : '展开工具栏'}
           />
         )}
-        {hasValue && <SendButton onClick={handleSendBtnClick} disabled={!hasValue} />}
+        {showSendBtn && <SendButton onClick={handleSendBtnClick} disabled={!hasValue} />}
       </div>
       {isAccessoryOpen && (
         <AccessoryWrap onClickOutside={handleAccessoryBlur}>

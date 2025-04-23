@@ -9,6 +9,7 @@ import {
 import { QuickReplies, QuickReplyItemProps } from '../QuickReplies';
 import { Composer as DComposer, ComposerProps, ComposerHandle } from '../Composer';
 import { isSafari, getIOSMajorVersion } from '../../utils/ua';
+import { ComposerTips } from '../CustomComposer';
 
 export type ChatProps = Omit<ComposerProps, 'onFocus' | 'onChange' | 'onBlur'> &
   ConfigContextType &
@@ -133,6 +134,8 @@ export type ChatProps = Omit<ComposerProps, 'onFocus' | 'onChange' | 'onBlur'> &
      * 输入组件
      */
     Composer?: React.ElementType; // FIXME
+
+    tipsData?: any[]
   };
 
 export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => {
@@ -178,6 +181,7 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
     rightAction,
     Composer = DComposer,
     isX,
+    tipsData=[]
   } = props;
   const [currentColorScheme, setCurrentColorScheme] = useState<'light' | 'dark'>('light');
 
@@ -254,6 +258,7 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
           onBackBottomClick={onBackBottomClick}
         />
         <div className="ChatFooter">
+          <ComposerTips tipsData={tipsData}/>
           {renderQuickReplies ? (
             renderQuickReplies()
           ) : (

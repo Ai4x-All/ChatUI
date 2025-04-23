@@ -5,18 +5,15 @@ import { FileCard } from '../FileCard';
 import { Loading } from '../Loading';
 
 export interface CustomComposerProps extends ComposerProps {
-  tipsData?: any[];
   pendingAttachments: any[];
   onDeleteAttachment: (id: string) => void;
 }
 
 export const CustomComposer = React.forwardRef<ComposerHandle, CustomComposerProps>(
-  ({ pendingAttachments, onDeleteAttachment, tipsData = [], ...composerProps }, ref) => {
+  ({ pendingAttachments, onDeleteAttachment, ...composerProps}, ref) => {
 
     return (
       <>
-        {tipsData.length ? <div className="tips">{tipsData[0].message}</div> : null}
-
         <div className="custom-composer-container">
             {pendingAttachments.length > 0 && (
               <div className="pending-attachments">
@@ -49,11 +46,8 @@ export const CustomComposer = React.forwardRef<ComposerHandle, CustomComposerPro
                 ))}
               </div>
             )}
-            {/*渲染受控的 Composer 输入框*/}
-            <Composer
-              {...composerProps}
-              ref={ref}
-            />
+            {/* 这里直接用新的 memo 版本 */}
+            <Composer {...composerProps} ref={ref} />
             <p className="custom-composer-tip">智能体也可能会犯错，请核查重要信息。</p>
           </div>
       </>

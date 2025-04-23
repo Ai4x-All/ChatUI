@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Chat, {
   Bubble,
@@ -364,11 +364,27 @@ export default () => {
         return null;
     }
   }
+  const [tipsData, setTipsData] = useState<any>()
   // 使用 useCallback 创建 Composer 渲染函数
   const renderComposer = useCallback((props: any) => (
-    <CustomComposer {...props} pendingAttachments={[]} onDeleteAttachment={() => {}}
-                    onSend={() => {}}/>
+    <>
+      <CustomComposer {...props} pendingAttachments={[]} onDeleteAttachment={() => {}}
+                      onSend={() => {}}/>
+    </>
   ), []);
+
+  useEffect(() => {
+    setInterval(() => {
+      const attrObj = {
+        name: '测试',
+        id: 'RA-afedd491fc92468b962bd78874d346da',
+        avatar: ""
+      }
+
+      setTipsData([{message: Math.random(), ...attrObj}])
+    }, 2000)
+  }, []);
+
   return (
     <Chat
       colorScheme="auto"
@@ -421,6 +437,7 @@ export default () => {
       onQuickReplyClick={handleQuickReplyClick}
       onSend={handleSend}
       onImageSend={() => Promise.resolve()}
+      tipsData={tipsData}
       Composer={renderComposer}// 使用稳定的渲染函数
     />
   );
