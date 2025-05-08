@@ -16,7 +16,7 @@ export const SendButton = ({ disabled, onClick }: SendButtonProps) => {
     const wrap = wrapRef.current;
     const btn = btnRef.current;
     if (wrap && btn) {
-      wrap.style.setProperty('--send-width', `${btn.offsetWidth}px`);
+      // wrap.style.setProperty('--send-width', `${btn.offsetWidth}px`);
     }
   }, [])
 
