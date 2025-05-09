@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { FileCard } from '../FileCard';
 import { Bubble } from '../Bubble';
+import { useLocale } from '../ConfigProvider';
 
 const Attachment: React.FC<{ attachment: any, getImageUrl?: (name: string) => {},
   handleFileDetail?:(detail:any) => {} }> = ({ attachment, getImageUrl, handleFileDetail }) => {
   const [fileContent, setFileContent] = useState<JSX.Element | null>(null);
-
+  const { trans } = useLocale('Attachment');
   // 下载
   const download = async (file:any) => {
     const url:any = await getImageUrl?.(file.object_name); // 获取 Blob 数据
@@ -70,7 +71,7 @@ const Attachment: React.FC<{ attachment: any, getImageUrl?: (name: string) => {}
             <Bubble type="image" key={attachment.object_name}
                     style={{ background: 'transparent', textAlign: 'right' }}>
               <img onClick={() => fileDetail(attachment)} src={file} alt="" />
-              <p className="download"><a onClick={() => download(attachment)}>下载</a></p>
+              <p className="download"><a onClick={() => download(attachment)}>{trans('download')}</a></p>
             </Bubble>
           );
         } else {
@@ -78,8 +79,8 @@ const Attachment: React.FC<{ attachment: any, getImageUrl?: (name: string) => {}
             type: attachment.file_type
           });
           html = <FileCard key={attachment.object_name} file={file}>
-            <a onClick={() => fileDetail(attachment)}>查看</a>
-            <a onClick={() => download(attachment)}>下载</a>
+            <a onClick={() => fileDetail(attachment)}>{trans('view')}</a>
+            <a onClick={() => download(attachment)}>{trans('download')}</a>
           </FileCard>;
         }
 
@@ -93,7 +94,7 @@ const Attachment: React.FC<{ attachment: any, getImageUrl?: (name: string) => {}
   }, [attachment]);
 
   if (!fileContent) {
-    return <div>加载中...</div>;
+    return <div>{trans('loading')}</div>;
   }
 
   return fileContent;

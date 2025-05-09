@@ -15,6 +15,11 @@ export default {
   },
   Composer: {
     send: '发送',
+    placeholder: '请输入...',
+    voice: '切换到语音输入',
+    keyboard: '切换到键盘输入',
+    close: '关闭工具栏',
+    open: '展开工具栏',
   },
   SendConfirm: {
     title: '发送图片',
@@ -34,4 +39,17 @@ export default {
   Search: {
     search: '搜索',
   },
+  CustomComposer:{
+    agentErrorTip: "智能体也可能会犯错，请核查重要信息。",
+    uploadFailed: "上传失败",
+    deleteAttachment: "删除附件",
+  },
+  Attachment:{
+    download: "下载",
+    view: "查看",
+    loading: "加载中...",
+  },
+  MessageBubble:{
+    loading: "加载中...",
+  }
 };

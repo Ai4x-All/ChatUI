@@ -13,6 +13,7 @@ import { Action } from './Action';
 import toggleClass from '../../utils/toggleClass';
 import { isIOS, isArkWeb } from '../../utils/ua';
 import { updateViewportTop, setViewportTop } from './viewportTop';
+import { useLocale } from '../ConfigProvider';
 
 export const CLASS_NAME_FOCUSING = 'S--focusing';
 
@@ -45,12 +46,13 @@ export interface ComposerHandle {
 }
 
 export const Composer = React.forwardRef<ComposerHandle, ComposerProps>((props, ref) => {
+  const { trans } = useLocale('Composer');
   const {
     text: initialText = '',
     textOnce: oTextOnce,
     inputType: initialInputType = 'text',
     wideBreakpoint,
-    placeholder: oPlaceholder = '请输入...',
+    placeholder: oPlaceholder = trans('placeholder'),
     recorder = {},
     onInputTypeChange,
     onFocus,
@@ -340,7 +342,7 @@ export const Composer = React.forwardRef<ComposerHandle, ComposerProps>((props, 
             data-icon={inputTypeIcon}
             icon={inputTypeIcon}
             onClick={handleInputTypeChange}
-            aria-label={isInputText ? '切换到语音输入' : '切换到键盘输入'}
+            aria-label={isInputText ? trans('voice') : trans('keyboard')}
           />
         )}
         <div className="Composer-inputWrap">
@@ -355,7 +357,7 @@ export const Composer = React.forwardRef<ComposerHandle, ComposerProps>((props, 
             })}
             icon="plus"
             onClick={handleAccessoryToggle}
-            aria-label={isAccessoryOpen ? '关闭工具栏' : '展开工具栏'}
+            aria-label={isAccessoryOpen ? trans('close') : trans('open')}
           />
         )}
         {showSendBtn && <SendButton onClick={handleSendBtnClick} disabled={!hasValue} />}

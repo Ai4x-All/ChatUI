@@ -15,6 +15,11 @@ export default {
   },
   Composer: {
     send: 'Send',
+    placeholder: 'Enter...',
+    voice: 'Switch to voice input',
+    keyboard: 'Switch to keyboard input',
+    close: 'Close toolbar',
+    open: 'Open toolbar',
   },
   SendConfirm: {
     title: 'Send photo',
@@ -34,4 +39,17 @@ export default {
   Search: {
     search: 'Search',
   },
+  customComposer: {
+    uploadFailed: "Upload Failed",
+    deleteAttachment: "Delete Attachment",
+    agentErrorTip: "Agents may make mistakes, please verify important information."
+  },
+  Attachment:{
+    download: "Download",
+    view: "View",
+    loading: "Loading...",
+  },
+  MessageBubble:{
+    loading: "Loading...",
+  }
 };

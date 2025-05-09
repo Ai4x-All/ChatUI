@@ -7,6 +7,7 @@ import { Bubble } from '../Bubble';
 import {Typing, } from "../Typing"
 import {TypingBubble} from "../TypingBubble"
 import './style.less'
+import { useLocale } from '../ConfigProvider';
 // 导入所需的插件
 import remarkGfm from 'remark-gfm';
 // import rehypeRaw from 'rehype-raw';
@@ -25,6 +26,7 @@ export interface MessageBubbleProps {
 const Attachment = lazy(() => import('./Attachment'));
 
 export const MessageBubble = React.forwardRef<HTMLDivElement, MessageBubbleProps> ((props, ref) => {
+  const { trans } = useLocale('MessageBubble');
   const { message, getImageUrl, handleFileDetail, handleDetail} = props
   const { type, content, attachments, position } = message;
   // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -63,7 +65,7 @@ export const MessageBubble = React.forwardRef<HTMLDivElement, MessageBubbleProps
     return (
       <div className={`message-attachments ${position}`} key={message.id} ref={ref}>
         {attachments.map((attachment: any) => (
-          <Suspense fallback={<div>加载附件...</div>} key={attachment.object_name}>
+          <Suspense fallback={<div>{trans('loading')}</div>} key={attachment.object_name}>
             <Attachment attachment={attachment} getImageUrl={getImageUrl}
                         handleFileDetail={handleFileDetail} />
           </Suspense>

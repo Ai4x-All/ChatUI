@@ -3,7 +3,7 @@ import React from 'react';
 import { Composer, ComposerHandle, ComposerProps } from '../Composer';
 import { FileCard } from '../FileCard';
 import { Loading } from '../Loading';
-
+import { useLocale } from '../ConfigProvider';
 export interface CustomComposerProps extends ComposerProps {
   pendingAttachments: any[];
   onDeleteAttachment: (id: string) => void;
@@ -11,7 +11,7 @@ export interface CustomComposerProps extends ComposerProps {
 
 export const CustomComposer = React.forwardRef<ComposerHandle, CustomComposerProps>(
   ({ pendingAttachments, onDeleteAttachment, ...composerProps}, ref) => {
-
+    const { trans } = useLocale('CustomComposer');
     return (
       <>
         <div className="custom-composer-container">
@@ -28,7 +28,7 @@ export const CustomComposer = React.forwardRef<ComposerHandle, CustomComposerPro
                     )}
                     {attachment.status === 'error' && (
                       <div className="attachment-error">
-                        <span>上传失败</span>
+                        <span>{trans('uploadFailed')}</span>
                         {/* 根据需要实现重试逻辑 */}
                       </div>
                     )}
@@ -36,7 +36,7 @@ export const CustomComposer = React.forwardRef<ComposerHandle, CustomComposerPro
                       <button
                         className="delete-attachment-button"
                         onClick={() => onDeleteAttachment(attachment.id)}
-                        aria-label={`删除附件 ${attachment.name}`}
+                        aria-label={`${trans('deleteAttachment')} ${attachment.name}`}
                       >
                         &times;
                       </button>
@@ -48,7 +48,7 @@ export const CustomComposer = React.forwardRef<ComposerHandle, CustomComposerPro
             )}
             {/* 这里直接用新的 memo 版本 */}
             <Composer {...composerProps} ref={ref} />
-            <p className="custom-composer-tip">智能体也可能会犯错，请核查重要信息。</p>
+            <p className="custom-composer-tip">{trans('agentErrorTip')}</p>
           </div>
       </>
     );
