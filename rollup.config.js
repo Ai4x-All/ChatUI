@@ -4,6 +4,7 @@ import babel from '@rollup/plugin-babel';
 import terser from '@rollup/plugin-terser';
 import pkg from './package.json';
 import postcss from 'rollup-plugin-postcss';
+import image from '@rollup/plugin-image';
 
 const name = 'ChatUI';
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
@@ -12,6 +13,7 @@ export default {
   input: './src/index.ts',
   external: ['react', 'react-dom'],
   plugins: [
+    image(),
     resolve({ extensions }),
     commonjs(),
     babel({

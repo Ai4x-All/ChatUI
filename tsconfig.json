@@ -31,9 +31,11 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "stripInternal": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
 
   /* File Inclusion */
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "es", "lib", "./*.js"]
 }
