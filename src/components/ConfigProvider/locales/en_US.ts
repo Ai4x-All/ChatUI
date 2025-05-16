@@ -39,7 +39,7 @@ export default {
   Search: {
     search: 'Search',
   },
-  customComposer: {
+  CustomComposer: {
     uploadFailed: "Upload Failed",
     deleteAttachment: "Delete Attachment",
     agentErrorTip: "Agents may make mistakes, please verify important information."
