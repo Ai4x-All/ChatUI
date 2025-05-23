@@ -10,10 +10,12 @@ import './style.less'
 import { useLocale } from '../ConfigProvider';
 // 导入所需的插件
 import remarkGfm from 'remark-gfm';
-// import rehypeRaw from 'rehype-raw';
+import rehypeRaw from 'rehype-raw';
 // 根据需要导入其他插件
-// import remarkMath from 'remark-math';
-// import rehypeKatex from 'rehype-katex';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {dark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 export interface MessageBubbleProps {
   message: MessageProps;
@@ -53,9 +55,28 @@ export const MessageBubble = React.forwardRef<HTMLDivElement, MessageBubbleProps
       className="messageContent"
       components={{
         a: CustomLink, // 替换默认的 <a> 渲染器
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        code(props) {
+          const {children, className, node, ...rest} = props
+          const match = /language-(\w+)/.exec(className || '')
+          return match ? (
+            // @ts-ignore
+            <SyntaxHighlighter
+              {...rest}
+              PreTag="div"
+              children={String(children).replace(/\n$/, '')}
+              language={match[1]}
+              style={dark}
+            />
+          ) : (
+            <code {...rest} className={className}>
+              {children}
+            </code>
+          )
+        }
       }}
-      remarkPlugins={[remarkGfm /*, remarkMath */]}
-      // rehypePlugins={[rehypeRaw /*, rehypeKatex */]}
+      remarkPlugins={[remarkGfm , remarkMath ]}
+      rehypePlugins={[rehypeRaw , rehypeKatex ]}
     >
       {content}
     </ReactMarkdown>

@@ -5,7 +5,7 @@ import terser from '@rollup/plugin-terser';
 import pkg from './package.json';
 import postcss from 'rollup-plugin-postcss';
 import image from '@rollup/plugin-image';
-
+import json from '@rollup/plugin-json';
 const name = 'ChatUI';
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
@@ -30,6 +30,7 @@ export default {
       extensions: ['.css'],
       inject: true, // 或者使用 extract: true 单独抽离 CSS 文件
     }),
+    json()
   ],
   output: {
     file: pkg.browser,

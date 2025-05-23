@@ -72,9 +72,9 @@ const Message = (props: MessageProps) => {
         </div>
       )}
       <div className="Message-main">
-        {isRL && avatar && <Avatar src={avatar} shape="square" alt={name} url={user.url} />}
+        {isRL && avatar && <Avatar src={avatar} shape="square" alt={name} url={user.url} className={user.hidUser ? 'Opacity_0' : ''}/>}
         <div className="Message-inner">
-          {isRL && name && <div className="Message-author">{name}</div>}
+          {isRL && name && !user.hidUser && <div className={`Message-author`}>{name}</div>}
           <div className="Message-content" role="alert" aria-live="assertive" aria-atomic="false">
             {renderMessageContent(msg)}
           </div>

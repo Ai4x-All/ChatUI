@@ -1,6 +1,9 @@
 .Message {
   position: relative;
 
+  table {
+    background-color: var(--color-fill-1);
+  }
   & + & {
     margin-top: var(--gutter);
   }
@@ -12,6 +15,7 @@
     }
     .Bubble {
       margin-right: var(--msg-gutter);
+      background: var(--brand-5);
     }
   }
   &.right {
@@ -54,6 +58,9 @@
   align-items: flex-start;
 }
 
+.Opacity_0 {
+  opacity: 0;
+}
 .Message-inner {
   flex: 1;
   min-width: 0;
