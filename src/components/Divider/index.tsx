@@ -4,6 +4,7 @@ import clsx from 'clsx';
 export type DividerProps = {
   className?: string;
   position?: 'center' | 'left' | 'right';
+  style?: React.CSSProperties;
 };
 
 export const Divider: React.FC<DividerProps> = (props) => {

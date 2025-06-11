@@ -16,6 +16,9 @@ import { MessageProps as CoreMessageProps } from '../Message';
 export interface ExtendedMessageProps extends CoreMessageProps {
     attachments?: Attachment[]; // 新增字段
     id?: string; // 新增字段
-    agent_name?: string; // 新增字段
-    agent_id?: string; // 新增字段
+    parent_id?: string; // 新增字段
+    group_id?: string; // 新增字段
+    computer_content?: string; // 新增字段
+    child?:any[];
+    loading: boolean; // 消息流是否结束
 }

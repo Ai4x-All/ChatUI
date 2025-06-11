@@ -169,6 +169,7 @@ export { Composer } from './components/Composer';
 export type { ComposerProps, ComposerHandle } from './components/Composer';
 export { CustomComposer } from './components/CustomComposer';
 export type { CustomComposerProps } from './components/CustomComposer';
+export { CustomMarkdown } from './components/CustomMarkdown';
 
 export { Chat as default } from './components/Chat';
 export type { ChatProps } from './components/Chat';
