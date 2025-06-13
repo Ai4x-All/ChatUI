@@ -53,7 +53,7 @@ export const MessageBubble = React.forwardRef<HTMLDivElement, MessageBubbleProps
       case 'processing':
         return `数据处理 ${types}`
       case 'thinking':
-        return `任务拆解`
+        return `任务分析`
       // 其他消息类型的渲染
       default:
         return types;
