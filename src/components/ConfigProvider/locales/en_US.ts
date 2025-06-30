@@ -51,5 +51,8 @@ export default {
   },
   MessageBubble:{
     loading: "Loading...",
+  },
+  Think:{
+    taskDecomposition: "Task Decomposition",
   }
 };

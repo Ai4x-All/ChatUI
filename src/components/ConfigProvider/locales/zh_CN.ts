@@ -51,5 +51,8 @@ export default {
   },
   MessageBubble:{
     loading: "加载中...",
+  },
+  Think:{
+    taskDecomposition: "任务分析",
   }
 };
