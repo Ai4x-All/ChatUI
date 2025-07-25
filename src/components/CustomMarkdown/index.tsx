@@ -36,7 +36,7 @@ export const CustomMarkdown: React.FC<any> = (props: any) => {
         );
     };
     return <ReactMarkdown
-        className="messageContent version_html"
+        className="messageContent"
         components={{
             a: CustomLink, // 替换默认的 <a> 渲染器
             img: CustomImg,

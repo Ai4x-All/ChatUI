@@ -373,17 +373,17 @@ export default () => {
     </>
   ), []);
 
-  useEffect(() => {
-    setInterval(() => {
-      const attrObj = {
-        name: '测试',
-        id: 'RA-afedd491fc92468b962bd78874d346da',
-        avatar: ""
-      }
-
-      setTipsData([{message: Math.random(), ...attrObj}])
-    }, 2000)
-  }, []);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     const attrObj = {
+  //       name: '测试',
+  //       id: 'RA-afedd491fc92468b962bd78874d346da',
+  //       avatar: ""
+  //     }
+  //
+  //     setTipsData([{message: Math.random(), ...attrObj}])
+  //   }, 2000)
+  // }, []);
 
   return (
     <Chat
