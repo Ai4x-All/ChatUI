@@ -48,6 +48,10 @@ export interface MessageProps {
    */
   status?: IMessageStatus;
   /**
+   * 状态 描述
+   */
+  status_description?: string;
+  /**
    * 消息内容渲染函数
    */
   renderMessageContent?: (message: MessageProps) => React.ReactNode;
@@ -74,7 +78,7 @@ const Message = (props: MessageProps) => {
       <div className="Message-main">
         {isRL && avatar && <Avatar src={avatar} shape="square" alt={name} url={user.url} className={user.hidUser ? 'Opacity_0' : ''}/>}
         <div className="Message-inner">
-          {isRL && name && !user.hidUser && <div className={`Message-author`}>{name}</div>}
+          {isRL && name && !user.hidUser && <div className={`Message-author`}>{name} {msg?.status_description}</div>}
           <div className="Message-content" role="alert" aria-live="assertive" aria-atomic="false">
             {renderMessageContent(msg)}
           </div>
