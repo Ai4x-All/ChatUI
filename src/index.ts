@@ -1,4 +1,5 @@
 import 'intersection-observer';
+import 'core-js/actual/structured-clone';
 
 export { default as clsx } from 'clsx';
 export { default as DOMPurify } from 'dompurify';
