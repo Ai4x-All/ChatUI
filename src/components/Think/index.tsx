@@ -6,7 +6,7 @@ export interface ThinkProps {
   className?: string;
   isDone?: boolean;
   thinkTime?: number;
-  children?: React.ReactNode;
+  children?: any;
 }
 
 export const Think = ({ className, isDone, thinkTime, children }: ThinkProps) => {
