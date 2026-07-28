@@ -4,12 +4,13 @@ import { Icon } from '../Icon';
 
 export interface ThinkProps {
   className?: string;
+  text?: string;
   isDone?: boolean;
   thinkTime?: number;
-  children?: any;
+  children?: React.ReactNode;
 }
 
-export const Think = ({ className, isDone, thinkTime, children }: ThinkProps) => {
+export const Think = ({ className, text, isDone, thinkTime, children }: ThinkProps) => {
   const [show, setShow] = useState(true);
 
   const handleClick = () => {
@@ -17,6 +18,9 @@ export const Think = ({ className, isDone, thinkTime, children }: ThinkProps) =>
   };
 
   const getText = () => {
+    if (text) {
+      return text;
+    }
     if (isDone) {
       const time = thinkTime ? `（用时${thinkTime}秒）` : '';
       return `已深度思考${time}`;
