@@ -1,6 +1,6 @@
 import React from 'react';
 import { DemoPage, DemoSection } from '../components';
-import { Card, Goods, Button } from '../../../src';
+import { Card, Goods, Button, CardTitle, CardContent } from '../../../src';
 import { ConfigProvider } from '../../../src/components/ConfigProvider';
 
 export default () => (
@@ -26,6 +26,25 @@ export default () => (
             },
           }}
         />
+      </Card>
+    </DemoSection>
+    <DemoSection title="订单（标题+描述+状态）">
+      <Card size="xl">
+        <Goods
+          img="//gw.alicdn.com/tfs/TB1p_nirYr1gK0jSZR0XXbP8XXa-300-300.png"
+          name="商题商品标商品标商品标..."
+          desc="2025-10-23 14:37 寄出"
+          status="待支付"
+          currency="¥"
+          price={999.99}
+          caption="共9件"
+        >
+          <div className="Order-actions" style={{ textAlign: 'right' }}>
+            <Button color="primary" size="sm">
+              发送
+            </Button>
+          </div>
+        </Goods>
       </Card>
     </DemoSection>
     <DemoSection title="订单（标题+描述+状态）">
@@ -134,6 +153,45 @@ export default () => (
             </Button>
           </div>
         </Goods>
+      </Card>
+    </DemoSection>
+    <DemoSection title="待支付运费">
+      <Card fluid>
+        <CardTitle>您有5笔历史运费待支付</CardTitle>
+        <CardContent>
+          <Goods
+            type="order"
+            img="//gw.alicdn.com/tfs/TB1p_nirYr1gK0jSZR0XXbP8XXa-300-300.png"
+            caption="共9件"
+            name="圆通快递"
+            desc="2025-10-23 14:37 寄出"
+            variant="inList"
+            elderMode
+          >
+            <div className="Order-actions">
+              <span>待支付¥300.0</span>
+              <Button color="primary" size="sm">
+                去支付
+              </Button>
+            </div>
+          </Goods>
+          <Goods
+            type="order"
+            img="//gw.alicdn.com/tfs/TB1p_nirYr1gK0jSZR0XXbP8XXa-300-300.png"
+            caption="共9件"
+            name="圆通快递"
+            desc="2025-10-23 14:37 寄出"
+            status="待支付¥300.0"
+            variant="inList"
+            elderMode
+          >
+            <div className="Order-actions" style={{ textAlign: 'right' }}>
+              <Button color="primary" size="sm">
+                去支付
+              </Button>
+            </div>
+          </Goods>
+        </CardContent>
       </Card>
     </DemoSection>
     <DemoSection title="小尺寸">

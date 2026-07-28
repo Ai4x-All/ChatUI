@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DemoPage, DemoSection } from '../components';
 import { Tabs, Tab } from '../../../src';
 
@@ -10,6 +10,32 @@ export default () => {
     <DemoPage>
       <DemoSection title="基础用法">
         <Tabs index={tabIndex} onChange={setTabIndex}>
+          <Tab label="标签1">
+            <p>内容1</p>
+          </Tab>
+          <Tab label="标签2">
+            <p>内容2</p>
+          </Tab>
+          <Tab label="标签3">
+            <p>内容3</p>
+          </Tab>
+        </Tabs>
+      </DemoSection>
+      <DemoSection title="大尺寸">
+        <Tabs size="lg">
+          <Tab label="标签1">
+            <p>内容1</p>
+          </Tab>
+          <Tab label="标签2">
+            <p>内容2</p>
+          </Tab>
+          <Tab label="标签3">
+            <p>内容3</p>
+          </Tab>
+        </Tabs>
+      </DemoSection>
+      <DemoSection title="强化版">
+        <Tabs color="primary">
           <Tab label="标签1">
             <p>内容1</p>
           </Tab>

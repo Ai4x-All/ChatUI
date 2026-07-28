@@ -2,6 +2,76 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0](https://github.com/alibaba/ChatUI/compare/v3.6.1...v3.7.0) (2026-03-26)
+
+
+### Features
+
+* sync 3.2.16 ([d2e8f5e](https://github.com/alibaba/ChatUI/commit/d2e8f5eca54955c1ab1f9d3e7aca415f7bf87f88))
+
+### [3.6.1](https://github.com/alibaba/ChatUI/compare/v3.6.0...v3.6.1) (2026-03-16)
+
+
+### Features
+
+* sync 3.2.14 ([1fe2eb7](https://github.com/alibaba/ChatUI/commit/1fe2eb729512c5be8638e35bb2036d7d5355b191))
+
+## [3.6.0](https://github.com/alibaba/ChatUI/compare/v3.5.0...v3.6.0) (2025-12-16)
+
+
+### Features
+
+* sync 3.2.11 ([d793579](https://github.com/alibaba/ChatUI/commit/d793579baac415f67b96fd60007de68614182c12))
+
+## [3.5.0](https://github.com/alibaba/ChatUI/compare/v3.4.0...v3.5.0) (2025-12-11)
+
+
+### Features
+
+* sync 3.2.10 ([7913953](https://github.com/alibaba/ChatUI/commit/7913953f3642e7dd113e301e65892dd16eb75809))
+
+## [3.4.0](https://github.com/alibaba/ChatUI/compare/v3.3.0...v3.4.0) (2025-10-28)
+
+
+### Features
+
+* sync 3.2.7 ([af7cff1](https://github.com/alibaba/ChatUI/commit/af7cff1d7bb27b212883b20267d4087f640a49eb))
+
+## [3.3.0](https://github.com/alibaba/ChatUI/compare/v3.2.0...v3.3.0) (2025-09-15)
+
+
+### Features
+
+* sync 3.2.6 ([4467c4b](https://github.com/alibaba/ChatUI/commit/4467c4be23bd50c5ce3395bd78778c82ca56f0a5))
+
+## [3.2.0](https://github.com/alibaba/ChatUI/compare/v3.1.0...v3.2.0) (2025-09-09)
+
+
+### Features
+
+* sync 3.2.5 ([bf5911b](https://github.com/alibaba/ChatUI/commit/bf5911b2fa1c76cde8b53a4ee56cf833fb4d1c98))
+
+## [3.1.0](https://github.com/alibaba/ChatUI/compare/v3.1.0-beta.0...v3.1.0) (2025-08-22)
+
+
+### Features
+
+* sync 3.2.3 ([7b5c3a4](https://github.com/alibaba/ChatUI/commit/7b5c3a4ce93fd6947e23c47243bfe30fdd624ec2))
+
+## [3.1.0-beta.0](https://github.com/alibaba/ChatUI/compare/v3.0.1...v3.1.0-beta.0) (2025-08-19)
+
+
+### Features
+
+* sync 3.2.3 ([82c7f6e](https://github.com/alibaba/ChatUI/commit/82c7f6e0e89f26fb6ea7657d3aa29a6ef2cc131d))
+
+### [3.0.1](https://github.com/alibaba/ChatUI/compare/v1.3.0...v3.0.1) (2025-06-23)
+
+
+### Features
+
+* sync 3.2.2 ([352450f](https://github.com/alibaba/ChatUI/commit/352450f87d7e78abdfc5ced350825973b0544979))
+
 ## [3.0.0](https://github.com/alibaba/ChatUI/compare/v3.0.0-beta.8...v3.0.0) (2025-04-10)
 
 

@@ -9,13 +9,22 @@ export type RadioGroupProps = {
   name?: string;
   disabled?: boolean;
   block?: boolean;
+  align?: 'left' | 'right';
+  maxPerRow?: number;
+  flex?: boolean;
   onChange: (value: RadioValue, event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
-  const { className, options, value, name, disabled, block, onChange } = props;
+export const RadioGroup = (props: RadioGroupProps) => {
+  const { className, options, value, name, disabled, block, align, maxPerRow, flex, onChange } = props;
+
   return (
-    <div className={clsx('RadioGroup', { 'RadioGroup--block': block }, className)}>
+    <div
+      className={clsx('RadioGroup', { 'RadioGroup--block': block }, className)}
+      data-align={align}
+      data-layout={flex ? 'flex' : maxPerRow}
+      style={maxPerRow && !flex ? { '--max-per-row': maxPerRow } as React.CSSProperties : undefined}
+    >
       {options.map((item) => (
         <Radio
           label={item.label || item.value}

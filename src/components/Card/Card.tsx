@@ -3,7 +3,7 @@ import clsx from 'clsx';
 
 export type CardSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-export interface CardProps {
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   size?: CardSize;
   fluid?: boolean | 'order';

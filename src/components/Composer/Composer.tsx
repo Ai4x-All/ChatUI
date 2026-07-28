@@ -29,6 +29,7 @@ export type ComposerProps = {
   onInputTypeChange?: (inputType: InputType) => void;
   recorder?: RecorderProps;
   onSend: (type: string, content: string) => void;
+  onBeforeSend?: (type: string, content: string) => boolean | Promise<boolean>;
   onImageSend?: (file: File) => Promise<any>;
   onFocus?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
   onChange?: (value: string, event: React.ChangeEvent<Element>) => void;
@@ -59,6 +60,7 @@ export const Composer = React.forwardRef<ComposerHandle, ComposerProps>((props, 
     onBlur,
     onChange,
     onSend,
+    onBeforeSend,
     onImageSend,
     onAccessoryToggle,
     toolbar = [],
@@ -220,12 +222,24 @@ export const Composer = React.forwardRef<ComposerHandle, ComposerProps>((props, 
     [onBlur],
   );
 
-  const send = useCallback(() => {
+  const send = useCallback(async () => {
+    const sendType = 'text';
+    const sendContent = text || textOnce || '';
+
+    if (!sendContent) return;
+
+    if (onBeforeSend) {
+      const allowed = await Promise.resolve(onBeforeSend(sendType, sendContent));
+      if (!allowed) {
+        return;
+      }
+    }
+
     if (text) {
-      onSend('text', text);
+      onSend(sendType, text);
       setText('');
     } else if (textOnce) {
-      onSend('text', textOnce);
+      onSend(sendType, textOnce);
     }
     if (textOnce) {
       setTextOnce('');
@@ -234,7 +248,7 @@ export const Composer = React.forwardRef<ComposerHandle, ComposerProps>((props, 
     if (focused.current) {
       inputRef.current.focus();
     }
-  }, [oPlaceholder, onSend, text, textOnce]);
+  }, [oPlaceholder, onBeforeSend, onSend, text, textOnce]);
 
   const handleInputKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

@@ -11,15 +11,16 @@ export interface FileCardProps {
   className?: string;
   file: File;
   extension?: string;
+  children?: React.ReactNode;
 }
 
-export const FileCard: React.FC<FileCardProps> = (props) => {
-  const { className, file, extension, children, ...other } = props;
+export const FileCard = (props: FileCardProps) => {
+  const { className, file, extension, children } = props;
   const { name, size } = file;
   const ext = extension || getExtName(name);
 
   return (
-    <Card className={clsx('FileCard', className)} size="xl" {...other}>
+    <Card className={clsx('FileCard', className)} size="xl">
       <Flex>
         <div className="FileCard-icon" data-type={ext}>
           <Icon type="file" />

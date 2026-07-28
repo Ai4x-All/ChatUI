@@ -10,6 +10,8 @@
     }
   }
   &[data-variant="inList"] {
+    --goods-img-size: 88px;
+
     .Goods-status {
       display: flex;
       justify-content: flex-end;
@@ -18,7 +20,7 @@
   }
   &[data-variant="compact"] {
     --goods-img-size: 44px;
-    padding: 6px;
+    padding: 8px;
     background: var(--color-fill-2);
     color: var(--color-text-2);
 
@@ -32,7 +34,6 @@
   &-img {
     width: var(--goods-img-size);
     height: var(--goods-img-size);
-    margin-right: @goods-gap;
     object-fit: cover;
     border-radius: var(--radius-md);
   }
@@ -95,4 +96,24 @@
 .Goods-status,
 .Goods-slot {
   margin-top: 2Px;
+}
+
+.Goods-figure {
+  display: flex;
+  align-self: flex-start;
+  position: relative;
+  margin-right: @goods-gap;
+}
+
+.Goods-caption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  background: rgba(14, 17, 25, 0.5);
+  color: var(--white);
+  font-size: 12px;
+  line-height: 20px;
 }

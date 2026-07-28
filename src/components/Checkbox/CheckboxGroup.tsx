@@ -9,11 +9,14 @@ export type CheckboxGroupProps = {
   name?: string;
   disabled?: boolean;
   block?: boolean;
+  align?: 'left' | 'right';
+  maxPerRow?: number;
+  flex?: boolean;
   onChange: (value: CheckboxValue[], event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const CheckboxGroup: React.FC<CheckboxGroupProps> = (props) => {
-  const { className, options, value, name, disabled, block, onChange } = props;
+export const CheckboxGroup = (props: CheckboxGroupProps) => {
+  const { className, options, value, name, disabled, block, align, maxPerRow, flex, onChange } = props;
 
   function handleChange(val: CheckboxValue, e: React.ChangeEvent<HTMLInputElement>) {
     const newValue = e.target.checked ? value.concat(val) : value.filter((item) => item !== val);
@@ -21,7 +24,12 @@ export const CheckboxGroup: React.FC<CheckboxGroupProps> = (props) => {
   }
 
   return (
-    <div className={clsx('CheckboxGroup', { 'CheckboxGroup--block': block }, className)}>
+    <div
+      className={clsx('CheckboxGroup', { 'CheckboxGroup--block': block }, className)}
+      data-align={align}
+      data-layout={flex ? 'flex' : maxPerRow}
+      style={maxPerRow && !flex ? { '--max-per-row': maxPerRow } as React.CSSProperties : undefined}
+    >
       {options.map((item) => (
         <Checkbox
           label={item.label || item.value}

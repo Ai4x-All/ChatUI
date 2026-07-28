@@ -1,10 +1,24 @@
-@tabs-nav-margin: 7px;
+@tabs-nav-margin: 4px;
 @scrollable-width: 18px;
+
+.Tabs {
+  --tab-font-size: 15px;
+  --tab-active-color: var(--color-text-1);
+  --tab-line-bottom: 5px;
+
+  &[data-color='primary'] {
+    --tab-active-color: var(--brand-1);
+  }
+  &[data-size='lg'] {
+    --tab-font-size: 18px;
+    --tab-line-bottom: 3px;
+  }
+}
 
 .Tabs-nav {
   position: relative;
   display: flex;
-  margin: @tabs-nav-margin 0;;
+  margin: @tabs-nav-margin 0;
 
   &::-webkit-scrollbar {
     display: none;
@@ -13,6 +27,7 @@
 
 .Tabs--scrollable {
   .Tabs-nav {
+    position: relative;
     overflow: hidden;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -20,11 +35,15 @@
     margin-bottom: -(@scrollable-width - @tabs-nav-margin);
     padding-bottom: @scrollable-width;
   }
-  .Tabs-navPointer {
-    bottom: @scrollable-width;
-  }
   .Tabs-navItem {
-    flex: 1 0 auto;
+    flex: none;
+
+    &:first-child {
+      padding-left: 6px;
+    }
+    &:last-child {
+      padding-right: 6px;
+    }
   }
 }
 
@@ -34,37 +53,40 @@
 }
 
 .Tabs-navLink {
-  padding: @tabs-nav-link-padding;
-  border: @tabs-nav-link-border;
-  border-radius: @tabs-nav-link-border-radius;
-  background: @tabs-nav-link-bg;
-  color: @tabs-nav-link-color;
-  font-size: @tabs-nav-link-font-size;
-  transition: @tabs-nav-link-transition;
+  padding: 9px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-2);
+  font-size: var(--tab-font-size);
+  line-height: 18px;
+  transition: color 0.3s;
 
   &:focus:not(:focus-visible) {
     outline: 0;
   }
   &:hover {
     cursor: pointer;
-    color: @tabs-nav-link-hover-color;
+    color: var(--color-text-1);
   }
   &.active {
     position: relative;
     z-index: 1;
-    color: @tabs-nav-link-active-color;
+    color: var(--tab-active-color);
     font-weight: bold;
-  }
-}
 
-.Tabs-navPointer {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: @tabs-nav-pointer-height;
-  background: @tabs-nav-pointer-bg;
-  border-radius: @tabs-nav-pointer-border-radius;
-  transition: @tabs-nav-pointer-transition;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: var(--tab-line-bottom);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 2px;
+      background: currentColor;
+      border-radius: var(--radius-sm);
+    }
+  }
 }
 
 .Tabs-pane {

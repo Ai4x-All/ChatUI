@@ -2,36 +2,62 @@
 .Radio {
   position: relative;
   display: inline-block;
-  margin: 9px 12px 0 0;
-  padding: 4px 12px;
-  border: 1px solid var(--color-line-1);
+  margin: var(--radio-gap) var(--radio-gap) 0 0;
+  padding: 8px;
   border-radius: var(--radius-md);
-  background: var(--color-fill-1);
-  color: var(--color-text-2);
-  font-size: @font-size-sm;
+  background: var(--color-fill-2);
+  color: var(--color-text-1);
+  font-size: 14px;
   line-height: 20px;
   text-align: center;
   cursor: pointer;
-  transition: 0.15s ease-in-out;
+  transition: background 0.15s ease-in-out;
   -webkit-tap-highlight-color: transparent;
 }
 
+.CheckboxGroup,
 .RadioGroup {
-  margin-top: -9px;
+  --radio-gap: 8px;
+
+  margin-top: calc(var(--radio-gap) * -1);
+
+  &[data-align='left'] {
+    text-align: left;
+  }
+  &[data-align='right'] {
+    text-align: right;
+  }
+  &[data-layout] {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: calc(var(--radio-gap) * -1);
+  }
 }
 
+.CheckboxGroup--block,
 .RadioGroup--block {
-  .Radio {
-    display: block;
-    margin-right: 9px;
-  }
+  margin-top: 0;
 }
 
-.CheckboxGroup--block {
-  .Checkbox {
-    display: block;
-    margin-right: 0;
-  }
+.CheckboxGroup--block .Checkbox,
+.RadioGroup--block .Radio {
+  display: block;
+  margin-right: 0;
+}
+
+.CheckboxGroup[data-layout] .Checkbox,
+.RadioGroup[data-layout] .Radio {
+  // 使用 CSS 变量 --max-per-row 动态计算宽度，避免重复代码
+  // 当 data-layout 为数字时，使用 calc(100% / var(--max-per-row) - var(--radio-gap))
+  // 当 data-layout 为 'flex' 时，flex: 1
+  flex: 0 0 calc(100% / var(--max-per-row) - var(--radio-gap));
+  min-width: 0;
+}
+
+// 等分布局：data-layout='flex' 时，每个项目平均分配空间
+.CheckboxGroup[data-layout='flex'] .Checkbox,
+.RadioGroup[data-layout='flex'] .Radio {
+  flex: 1;
 }
 
 .Checkbox--disabled,
@@ -42,8 +68,9 @@
 
 .Checkbox--checked,
 .Radio--checked {
-  border-color: var(--brand-1);
+  background: var(--brand-4);
   color: var(--brand-1);
+  font-weight: 600;
 }
 
 .Checkbox-input,

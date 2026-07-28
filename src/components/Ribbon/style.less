@@ -1,0 +1,71 @@
+.Ribbon {
+  --ribbon-bg: var(--brand-3);
+  --ribbon-color: var(--brand-1);
+
+  position: absolute;
+  top: 0;
+  padding: 2px 6px;
+  background-color: var(--ribbon-bg);
+  color: var(--ribbon-color);
+  font-weight: 500;
+  white-space: nowrap;
+  font-size: 12px;
+
+  &[data-color='gray'] {
+    --ribbon-bg: rgba(80, 96, 122, 0.2);
+    --ribbon-color: var(--color-text-2);
+  }
+
+  &[data-position='left'] {
+    left: 0;
+    border-radius: var(--radius-md) 0 var(--radius-md) 0;
+
+    .Arc-1 {
+      top: 100%;
+      left: 0;
+    }
+    .Arc-2 {
+      top: 0;
+      left: 100%;
+    }
+  }
+  &[data-position='center'] {
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+
+    .Arc-1 {
+      top: 0;
+      right: 100%;
+      transform: rotate(90deg);
+    }
+    .Arc-2 {
+      top: 0;
+      left: 100%;
+    }
+  }
+  &[data-position='right'] {
+    right: 0;
+    border-radius: 0 var(--radius-md) 0 var(--radius-md);
+
+    .Arc-1 {
+      top: 0;
+      right: 100%;
+      transform: rotate(90deg);
+    }
+    .Arc-2 {
+      top: 100%;
+      right: 0;
+      transform: rotate(90deg);
+    }
+  }
+  &[data-size='sm'] {
+    font-size: 10px;
+    line-height: 1;
+  }
+}
+
+.Arc {
+  position: absolute;
+  color: var(--ribbon-bg);
+}

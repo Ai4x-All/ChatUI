@@ -8,9 +8,10 @@ type TabItemProps = {
   index: number;
   tabIndex: number;
   onClick: (index: number, event: React.MouseEvent) => void;
+  children?: React.ReactNode;
 };
 
-const TabItem: React.FC<TabItemProps> = (props) => {
+const TabItem = (props: TabItemProps) => {
   const { active, index, children, onClick, ...others } = props;
 
   function handleClick(e: React.MouseEvent) {
@@ -36,9 +37,10 @@ const TabItem: React.FC<TabItemProps> = (props) => {
 type TabsPaneProps = {
   active: boolean;
   id?: string;
+  children?: React.ReactNode;
 };
 
-const TabsPane: React.FC<TabsPaneProps> = (props) => {
+const TabsPane = (props: TabsPaneProps) => {
   const { active, children, ...others } = props;
 
   return (
@@ -51,14 +53,26 @@ const TabsPane: React.FC<TabsPaneProps> = (props) => {
 export type TabsProps = {
   className?: string;
   index?: number;
+  color?: 'primary';
+  size?: 'md' | 'lg';
   scrollable?: boolean;
   hideNavIfOnlyOne?: boolean;
   onChange?: (index: number, event: React.MouseEvent) => void;
+  children: React.ReactNode;
 };
 
-export const Tabs: React.FC<TabsProps> = (props) => {
-  const { className, index: oIndex = 0, scrollable, hideNavIfOnlyOne, children, onChange } = props;
-  const [pointerStyles, setPointerStyles] = useState({});
+export const Tabs = (props: TabsProps) => {
+  const {
+    className,
+    index: oIndex = 0,
+    color,
+    size,
+    scrollable,
+    hideNavIfOnlyOne,
+    children,
+    onChange,
+  } = props;
+
   const [index, setIndex] = useState(oIndex || 0);
   const indexRef = useRef(index);
   const navRef = useRef<HTMLDivElement>(null);
@@ -116,15 +130,8 @@ export const Tabs: React.FC<TabsProps> = (props) => {
     if (!text) return;
 
     const { offsetWidth: navWidth, offsetLeft: navOffsetLeft } = currentNav as HTMLElement;
-    const { width: textWidth } = text.getBoundingClientRect();
-    const pointerWidth = Math.max(textWidth - 16, 26);
     // 中心位的偏移量
     const offsetLeftOfCenter = navOffsetLeft + navWidth / 2;
-
-    setPointerStyles({
-      transform: `translateX(${offsetLeftOfCenter - pointerWidth / 2}px)`,
-      width: `${pointerWidth}px`,
-    });
 
     if (scrollable) {
       smoothScroll({
@@ -159,11 +166,14 @@ export const Tabs: React.FC<TabsProps> = (props) => {
   const needNav = headers.length > (hideNavIfOnlyOne ? 1 : 0);
 
   return (
-    <div className={clsx('Tabs', { 'Tabs--scrollable': scrollable }, className)}>
+    <div
+      className={clsx('Tabs', { 'Tabs--scrollable': scrollable }, className)}
+      data-color={color}
+      data-size={size}
+    >
       {needNav && (
         <div className="Tabs-nav" role="tablist" ref={navRef}>
           {headers}
-          <span className="Tabs-navPointer" style={pointerStyles} />
         </div>
       )}
       <div className="Tabs-content">{contents}</div>

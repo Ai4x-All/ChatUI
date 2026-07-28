@@ -21,6 +21,7 @@ export interface GoodsProps extends React.HTMLAttributes<GoodsRef> {
   className?: string;
   type?: 'goods' | 'order';
   img?: string;
+  caption?: string;
   name: string;
   desc?: React.ReactNode;
   tags?: TagProps[];
@@ -47,6 +48,7 @@ export const Goods = React.forwardRef<GoodsRef, GoodsProps>((props, ref) => {
     className,
     type,
     img,
+    caption,
     name,
     desc,
     tags = [],
@@ -108,7 +110,12 @@ export const Goods = React.forwardRef<GoodsRef, GoodsProps>((props, ref) => {
       ref={ref}
       {...other}
     >
-      {img && <img className="Goods-img" src={img} alt={name} />}
+      {img && (
+        <div className="Goods-figure">
+          <img className="Goods-img" src={img} alt={name} />
+          {caption && <span className="Goods-caption">{caption}</span>}
+        </div>
+      )}
       <FlexItem>
         <Flex>
           <FlexItem className="Goods-main">

@@ -13,7 +13,10 @@
 
 # misc
 .DS_Store
+.idea
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/pnpm-lock.yaml
+/demo/pnpm-lock.yaml
