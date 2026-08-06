@@ -197,7 +197,7 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
   useEffect(() => {
     const rootEl = document.documentElement;
     if (isSafari) {
-      rootEl.dataset.safari = '';
+      // rootEl.dataset.safari = '';
     }
 
     const v = getIOSMajorVersion();
