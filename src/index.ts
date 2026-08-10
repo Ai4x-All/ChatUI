@@ -30,8 +30,6 @@ export { Backdrop } from './components/Backdrop';
 export type { BackdropProps } from './components/Backdrop';
 export { Bubble } from './components/Bubble';
 export type { BubbleProps } from './components/Bubble';
-export { MessageBubble } from './components/BubbleAttachment';
-export type { MessageBubbleProps, Attachment, ExtendedMessageProps } from './components/BubbleAttachment';
 export { Button } from './components/Button';
 export type { ButtonProps } from './components/Button';
 export {
@@ -193,7 +191,6 @@ export { Composer } from './components/Composer';
 export type { ComposerProps, ComposerHandle } from './components/Composer';
 export { CustomComposer } from './components/CustomComposer';
 export type { CustomComposerProps } from './components/CustomComposer';
-export { CustomMarkdown } from './components/CustomMarkdown';
 
 export { Chat as default } from './components/Chat';
 export type { ChatProps } from './components/Chat';
