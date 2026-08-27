@@ -32,6 +32,10 @@ export interface MessageProps {
    */
   createdAt?: number;
   /**
+   * 消息创建时间戳
+   */
+  createdAtTime?: number;
+  /**
    * 消息发送者信息
    */
   user?: User;
@@ -61,6 +65,30 @@ const Message = (props: MessageProps) => {
   const { renderMessageContent = () => null, ...msg } = props;
   const { type, content, user = {}, _id: id, position = 'left', hasTime = true, createdAt } = msg;
   const { name, avatar } = user;
+  const statusExpiresAt = (msg.createdAtTime ?? 0) + 3 * 60 * 1000;
+  const canShowStatus = user.type === 'agent'
+    && Boolean(msg.status_description)
+    && Boolean(msg.createdAtTime);
+  const [showStatusDescription, setShowStatusDescription] = React.useState(
+    () => canShowStatus && Date.now() < statusExpiresAt,
+  );
+
+  React.useEffect(() => {
+    const remainingTime = statusExpiresAt - Date.now();
+    const shouldShow = canShowStatus && remainingTime > 0;
+
+    setShowStatusDescription(shouldShow);
+
+    if (!shouldShow) {
+      return undefined;
+    }
+
+    const timer = window.setTimeout(() => {
+      setShowStatusDescription(false);
+    }, remainingTime);
+
+    return () => window.clearTimeout(timer);
+  }, [canShowStatus, statusExpiresAt]);
 
   if (type === 'system') {
     return <SystemMessage content={content.text} action={content.action} />;
@@ -78,7 +106,11 @@ const Message = (props: MessageProps) => {
       <div className="Message-main">
         {isRL && avatar && <Avatar src={avatar} shape="square" alt={name} url={user.url} className={user.hidUser ? 'Opacity_0' : ''}/>}
         <div className="Message-inner">
-          {isRL && name && !user.hidUser && <div className={`Message-author`}>{name} {msg?.status_description}</div>}
+          {isRL && name && !user.hidUser && (
+            <div className="Message-author">
+              {name} {showStatusDescription && msg.status_description}
+            </div>
+          )}
           <div className="Message-content" role="alert" aria-live="assertive" aria-atomic="false">
             {renderMessageContent(msg)}
           </div>
