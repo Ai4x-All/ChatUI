@@ -5,9 +5,6 @@ import { IMessageStatus } from '../MessageStatus';
 import { Avatar } from '../Avatar';
 import { Popover, PopoverPlacement } from '../Popover';
 import { Time } from '../Time';
-import toggleClass from '../../utils/toggleClass';
-
-const CLASS_NAME_CARD_OPEN = 'S--avatarCardOpen';
 
 export interface User {
   avatar?: string;
@@ -72,7 +69,7 @@ export interface MessageProps {
    */
   renderAvatarCard?: (message: MessageProps) => React.ReactNode;
   /**
-   * 头像卡片的弹出位置
+   * 头像卡片的弹出位置，默认左侧头像往右弹、右侧头像往左弹
    */
   avatarCardPlacement?: PopoverPlacement;
 }
@@ -82,7 +79,7 @@ const Message = (props: MessageProps) => {
     renderMessageContent = () => null,
     onAvatarClick,
     renderAvatarCard,
-    avatarCardPlacement = 'right',
+    avatarCardPlacement,
     ...msg
   } = props;
   const { type, content, user = {}, _id: id, position = 'left', hasTime = true, createdAt } = msg;
@@ -114,12 +111,14 @@ const Message = (props: MessageProps) => {
     return () => window.clearTimeout(timer);
   }, [canShowStatus, statusExpiresAt]);
 
-  // 卡片打开期间锁住消息列表，避免滚动后卡片和头像脱节
+  // 滚动后卡片会和头像脱节，所以一滚动就关掉
   React.useEffect(() => {
     if (!avatarCardVisible) return undefined;
 
-    toggleClass(CLASS_NAME_CARD_OPEN, true);
-    return () => toggleClass(CLASS_NAME_CARD_OPEN, false);
+    const close = () => setAvatarCardVisible(false);
+    // scroll 事件不冒泡，用捕获才能监听到消息列表的滚动
+    document.addEventListener('scroll', close, true);
+    return () => document.removeEventListener('scroll', close, true);
   }, [avatarCardVisible]);
 
   if (type === 'system') {
@@ -128,6 +127,8 @@ const Message = (props: MessageProps) => {
 
   const isRL = position === 'right' || position === 'left';
   const avatarClickable = !user.hidUser && !!(onAvatarClick || renderAvatarCard);
+  // 头像在右侧时卡片往左弹，避免超出屏幕
+  const cardPlacement = avatarCardPlacement || (position === 'right' ? 'left' : 'right');
 
   const handleAvatarClick = (e: React.MouseEvent<HTMLElement>) => {
     if (onAvatarClick) {
@@ -164,7 +165,7 @@ const Message = (props: MessageProps) => {
             className="Message-avatarCard"
             active={avatarCardVisible}
             target={avatarRef.current}
-            placement={avatarCardPlacement}
+            placement={cardPlacement}
             hideArrow
             onClose={() => setAvatarCardVisible(false)}
           >
