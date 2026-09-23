@@ -3,7 +3,11 @@ import clsx from 'clsx';
 import { SystemMessage } from './SystemMessage';
 import { IMessageStatus } from '../MessageStatus';
 import { Avatar } from '../Avatar';
+import { Popover, PopoverPlacement } from '../Popover';
 import { Time } from '../Time';
+import toggleClass from '../../utils/toggleClass';
+
+const CLASS_NAME_CARD_OPEN = 'S--avatarCardOpen';
 
 export interface User {
   avatar?: string;
@@ -59,10 +63,28 @@ export interface MessageProps {
    * 消息内容渲染函数
    */
   renderMessageContent?: (message: MessageProps) => React.ReactNode;
+  /**
+   * 点击头像回调
+   */
+  onAvatarClick?: (message: MessageProps, event: React.MouseEvent<HTMLElement>) => void;
+  /**
+   * 头像卡片渲染函数，返回内容时点击头像会在头像旁弹出卡片
+   */
+  renderAvatarCard?: (message: MessageProps) => React.ReactNode;
+  /**
+   * 头像卡片的弹出位置
+   */
+  avatarCardPlacement?: PopoverPlacement;
 }
 
 const Message = (props: MessageProps) => {
-  const { renderMessageContent = () => null, ...msg } = props;
+  const {
+    renderMessageContent = () => null,
+    onAvatarClick,
+    renderAvatarCard,
+    avatarCardPlacement = 'right',
+    ...msg
+  } = props;
   const { type, content, user = {}, _id: id, position = 'left', hasTime = true, createdAt } = msg;
   const { name, avatar } = user;
   const statusExpiresAt = (msg.createdAtTime ?? 0) + 3 * 60 * 1000;
@@ -72,6 +94,8 @@ const Message = (props: MessageProps) => {
   const [showStatusDescription, setShowStatusDescription] = React.useState(
     () => canShowStatus && Date.now() < statusExpiresAt,
   );
+  const [avatarCardVisible, setAvatarCardVisible] = React.useState(false);
+  const avatarRef = React.useRef<HTMLElement | null>(null);
 
   React.useEffect(() => {
     const remainingTime = statusExpiresAt - Date.now();
@@ -90,11 +114,32 @@ const Message = (props: MessageProps) => {
     return () => window.clearTimeout(timer);
   }, [canShowStatus, statusExpiresAt]);
 
+  // 卡片打开期间锁住消息列表，避免滚动后卡片和头像脱节
+  React.useEffect(() => {
+    if (!avatarCardVisible) return undefined;
+
+    toggleClass(CLASS_NAME_CARD_OPEN, true);
+    return () => toggleClass(CLASS_NAME_CARD_OPEN, false);
+  }, [avatarCardVisible]);
+
   if (type === 'system') {
     return <SystemMessage content={content.text} action={content.action} />;
   }
 
   const isRL = position === 'right' || position === 'left';
+  const avatarClickable = !user.hidUser && !!(onAvatarClick || renderAvatarCard);
+
+  const handleAvatarClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (onAvatarClick) {
+      onAvatarClick(msg, e);
+    }
+    if (renderAvatarCard) {
+      // 有卡片时不跳转链接，改为在头像旁弹出卡片
+      e.preventDefault();
+      avatarRef.current = e.currentTarget;
+      setAvatarCardVisible(true);
+    }
+  };
 
   return (
     <div className={clsx('Message', position)} data-id={id} data-type={type}>
@@ -104,7 +149,28 @@ const Message = (props: MessageProps) => {
         </div>
       )}
       <div className="Message-main">
-        {isRL && avatar && <Avatar src={avatar} shape="square" alt={name} url={user.url} className={user.hidUser ? 'Opacity_0' : ''}/>}
+        {isRL && avatar && (
+          <Avatar
+            src={avatar}
+            shape="square"
+            alt={name}
+            url={user.url}
+            className={user.hidUser ? 'Opacity_0' : ''}
+            onClick={avatarClickable ? handleAvatarClick : undefined}
+          />
+        )}
+        {renderAvatarCard && avatarCardVisible && avatarRef.current && (
+          <Popover
+            className="Message-avatarCard"
+            active={avatarCardVisible}
+            target={avatarRef.current}
+            placement={avatarCardPlacement}
+            hideArrow
+            onClose={() => setAvatarCardVisible(false)}
+          >
+            {renderAvatarCard(msg)}
+          </Popover>
+        )}
         <div className="Message-inner">
           {isRL && name && !user.hidUser && (
             <div className="Message-author">

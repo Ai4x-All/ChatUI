@@ -157,6 +157,9 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
     renderMessageContent,
     onBackBottomShow,
     onBackBottomClick,
+    onAvatarClick,
+    renderAvatarCard,
+    avatarCardPlacement,
     quickReplies = [],
     quickRepliesVisible,
     onQuickReplyClick = () => { },
@@ -256,6 +259,9 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
           onScroll={onScroll}
           onBackBottomShow={onBackBottomShow}
           onBackBottomClick={onBackBottomClick}
+          onAvatarClick={onAvatarClick}
+          renderAvatarCard={renderAvatarCard}
+          avatarCardPlacement={avatarCardPlacement}
         />
         <div className="ChatFooter">
           <ComposerTips tipsData={tipsData}/>

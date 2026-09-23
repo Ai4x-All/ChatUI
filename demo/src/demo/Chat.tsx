@@ -296,6 +296,21 @@ export default () => {
     }
   }
 
+  function renderAvatarCard(msg: MessageProps) {
+    const { user = {} } = msg;
+    return (
+      <Card size="lg">
+        <CardTitle>{user.name || '匿名用户'}</CardTitle>
+        <CardText>{user.status_description || '这个人很懒，什么都没留下'}</CardText>
+        <CardActions>
+          <Button color="primary" onClick={() => console.log('发消息给', user.name)}>
+            发消息
+          </Button>
+        </CardActions>
+      </Card>
+    );
+  }
+
   function renderMessageContent(msg: MessageProps) {
     const { type, content } = msg;
 
@@ -433,6 +448,8 @@ export default () => {
       wideBreakpoint="800px"
       messages={messages}
       renderMessageContent={renderMessageContent}
+      onAvatarClick={(msg) => console.log('点击头像', msg.user)}
+      renderAvatarCard={renderAvatarCard}
       quickReplies={quickReplies}
       onQuickReplyClick={handleQuickReplyClick}
       onSend={handleSend}

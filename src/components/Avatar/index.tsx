@@ -13,16 +13,35 @@ export interface AvatarProps {
   size?: AvatarSize;
   shape?: AvatarShape;
   children?: React.ReactNode;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const Avatar = (props: AvatarProps) => {
-  const { className, src, alt, url, size = 'md', shape = 'circle', children } = props;
+  const { className, src, alt, url, size = 'md', shape = 'circle', children, onClick } = props;
 
   const Element = url ? 'a' : 'span';
+  const clickable = !!onClick;
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (!onClick || (e.key !== 'Enter' && e.key !== ' ')) return;
+    e.preventDefault();
+    onClick(e as unknown as React.MouseEvent<HTMLElement>);
+  };
+
   return (
     <Element
-      className={clsx('Avatar', `Avatar--${size}`, `Avatar--${shape}`, className)}
+      className={clsx(
+        'Avatar',
+        `Avatar--${size}`,
+        `Avatar--${shape}`,
+        { 'Avatar--clickable': clickable },
+        className,
+      )}
       href={url}
+      onClick={onClick}
+      onKeyDown={clickable ? handleKeyDown : undefined}
+      role={clickable && !url ? 'button' : undefined}
+      tabIndex={clickable && !url ? 0 : undefined}
     >
       {src ? <img src={src} alt={alt}
                   onError={e => {

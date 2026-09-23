@@ -19,6 +19,18 @@ export interface MessageContainerProps {
   renderBeforeMessageList?: () => React.ReactNode;
   onBackBottomShow?: () => void;
   onBackBottomClick?: () => void;
+  /**
+   * 点击头像回调
+   */
+  onAvatarClick?: MessageProps['onAvatarClick'];
+  /**
+   * 头像卡片渲染函数，返回内容时点击头像会在头像旁弹出卡片
+   */
+  renderAvatarCard?: MessageProps['renderAvatarCard'];
+  /**
+   * 头像卡片的弹出位置
+   */
+  avatarCardPlacement?: MessageProps['avatarCardPlacement'];
 }
 
 export interface MessageContainerHandle {
@@ -43,6 +55,9 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
       renderMessageContent,
       onBackBottomShow,
       onBackBottomClick,
+      onAvatarClick,
+      renderAvatarCard,
+      avatarCardPlacement,
     } = props;
 
     const [showBackBottom, setShowBackBottom] = useState(false);
@@ -193,7 +208,14 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
         >
           <div className="MessageList">
             {messages.map((msg) => (
-              <Message {...msg} renderMessageContent={renderMessageContent} key={msg._id} />
+              <Message
+                {...msg}
+                renderMessageContent={renderMessageContent}
+                onAvatarClick={onAvatarClick}
+                renderAvatarCard={renderAvatarCard}
+                avatarCardPlacement={avatarCardPlacement}
+                key={msg._id}
+              />
             ))}
             {isTyping && <Message type="typing" _id="typing" />}
           </div>

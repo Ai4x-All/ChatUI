@@ -40,6 +40,13 @@
   }
 }
 
+.S--avatarCardOpen,
+.S--avatarCardOpen .MessageContainer > .PullToRefresh {
+  overflow: hidden;
+  // 保留滚动条占位，避免锁定滚动时内容左右跳动
+  scrollbar-gutter: stable;
+}
+
 .Message-meta {
   display: flex;
   justify-content: center;
