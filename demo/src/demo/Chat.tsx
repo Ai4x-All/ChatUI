@@ -402,6 +402,7 @@ export default () => {
 
   return (
     <Chat
+      autoScrollToEnd={true}
       colorScheme="auto"
       elderMode={false}
       onRefresh={handleRefresh}

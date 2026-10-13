@@ -184,12 +184,13 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
     rightAction,
     Composer = DComposer,
     isX,
-    tipsData=[]
+    tipsData=[],
+    autoScrollToEnd = true
   } = props;
   const [currentColorScheme, setCurrentColorScheme] = useState<'light' | 'dark'>('light');
 
   function handleInputFocus(e: React.FocusEvent<HTMLTextAreaElement>) {
-    if (messagesRef && messagesRef.current) {
+    if (autoScrollToEnd && messagesRef && messagesRef.current) {
       messagesRef.current.scrollToEnd({ animated: false, force: true });
     }
     if (onInputFocus) {
@@ -250,6 +251,7 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
         {renderNavbar ? renderNavbar() : navbar && <Navbar {...navbar} />}
         <MessageContainer
           ref={messagesRef}
+          autoScrollToEnd={autoScrollToEnd}
           loadMoreText={loadMoreText}
           messages={messages}
           isTyping={isTyping}

@@ -31,6 +31,8 @@ export interface MessageContainerProps {
    * 头像卡片的弹出位置
    */
   avatarCardPlacement?: MessageProps['avatarCardPlacement'];
+
+  autoScrollToEnd?: boolean;
 }
 
 export interface MessageContainerHandle {
@@ -58,6 +60,7 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
       onAvatarClick,
       renderAvatarCard,
       avatarCardPlacement,
+      autoScrollToEnd = true
     } = props;
 
     const [showBackBottom, setShowBackBottom] = useState(false);
@@ -140,17 +143,24 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
 
       if (lastMessage.position === 'right') {
         // 自己发的消息，强制滚动到底部
-        scrollToEnd({ force: true });
+        // scrollToEnd({ force: true });
+        if (autoScrollToEnd) {
+          scrollToEnd({ force: true });
+        }
       } else if (isNearBottom(wrapper, 2)) {
-        const animated = !!wrapper.scrollTop;
-        scrollToEnd({ animated, force: true });
+        if (autoScrollToEnd) {
+          const animated = !!wrapper.scrollTop;
+          scrollToEnd({ animated, force: true });
+        }
       } else {
         setNewCount((c) => c + 1);
         setShowBackBottom(true);
       }
-    }, [lastMessage, scrollToEnd]);
+    }, [lastMessage, scrollToEnd, autoScrollToEnd]);
 
     useEffect(() => {
+      if (!autoScrollToEnd) return;
+
       scrollToEnd();
     }, [isTyping, scrollToEnd]);
 
