@@ -3,6 +3,7 @@ export const navConfig = [
     title: '对话组件',
     list: [
       { name: '对话容器', code: 'chat' },
+      { name: '对话容器scroll', code: 'chat-scroll' },
       { name: '气泡', code: 'bubble' },
       { name: '打字气泡', code: 'typing-bubble' },
       { name: '卡片', code: 'card' },

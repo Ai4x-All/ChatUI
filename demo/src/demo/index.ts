@@ -4,6 +4,7 @@ export { default as Button } from './Button';
 export { default as Card } from './Card';
 export { default as Carousel } from './Carousel';
 export { default as Chat } from './Chat';
+export { default as ChatScroll } from './ChatScroll';
 export { default as Checkbox } from './Checkbox';
 export { default as ComponentProvider } from './ComponentProvider';
 export { default as Confirm } from './Confirm';

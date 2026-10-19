@@ -185,7 +185,15 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
     Composer = DComposer,
     isX,
     tipsData=[],
-    autoScrollToEnd = true
+    autoScrollToEnd = true,
+    scrollMode,
+    backBottomAutoScroll,
+    backBottomShowCount,
+    hasUnreadMessages,
+    backBottomUnreadText,
+    loadingText,
+    topLoading,
+    bottomLoading
   } = props;
   const [currentColorScheme, setCurrentColorScheme] = useState<'light' | 'dark'>('light');
 
@@ -264,6 +272,14 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
           onAvatarClick={onAvatarClick}
           renderAvatarCard={renderAvatarCard}
           avatarCardPlacement={avatarCardPlacement}
+          scrollMode={scrollMode}
+          backBottomAutoScroll={backBottomAutoScroll}
+          backBottomShowCount={backBottomShowCount}
+          hasUnreadMessages={hasUnreadMessages}
+          backBottomUnreadText={backBottomUnreadText}
+          loadingText={loadingText}
+          topLoading={topLoading}
+          bottomLoading={bottomLoading}
         />
         <div className="ChatFooter">
           <ComposerTips tipsData={tipsData}/>

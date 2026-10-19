@@ -33,6 +33,22 @@ export interface MessageContainerProps {
   avatarCardPlacement?: MessageProps['avatarCardPlacement'];
 
   autoScrollToEnd?: boolean;
+
+  /** custom 模式下由外部接管消息滚动、分页和未读状态。 */
+  scrollMode?: 'default' | 'custom';
+
+  /** 点击回到底部自动滚动 */
+  backBottomAutoScroll?: boolean;
+  /** 回到底部是否显示未读数量 */
+  backBottomShowCount?: boolean;
+  /** 进入会话是否已有未读消息 */
+  hasUnreadMessages?: boolean;
+  backBottomUnreadText?: string;
+
+  /** 自定加载提示 */
+  loadingText?: string;
+  topLoading?: boolean;
+  bottomLoading?: boolean;
 }
 
 export interface MessageContainerHandle {
@@ -60,13 +76,24 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
       onAvatarClick,
       renderAvatarCard,
       avatarCardPlacement,
-      autoScrollToEnd = true
+      autoScrollToEnd = true,
+      scrollMode = 'default',
+      backBottomAutoScroll = true,
+      backBottomShowCount = true,
+      hasUnreadMessages = false,
+      backBottomUnreadText,
+      loadingText = '数据加载中...',
+      topLoading = false,
+      bottomLoading = false
     } = props;
+
+    const isCustomScroll = scrollMode === 'custom';
 
     const [showBackBottom, setShowBackBottom] = useState(false);
     const [newCount, setNewCount] = useState(0);
     const showBackBottomtRef = useRef(showBackBottom);
     const newCountRef = useRef(newCount);
+    const prevLastMessageIdRef = useRef<string | undefined>();
     const messagesRef = useRef<HTMLDivElement>(null);
     const scrollerRef = useRef<PullToRefreshHandle>(null);
     const lastMessage = messages[messages.length - 1];
@@ -88,9 +115,15 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
     }, []);
 
     const handleBackBottomClick = () => {
-      scrollToEnd({ animated: false, force: true });
-      // setNewCount(0);
-      // setShowBackBottom(false);
+      if (!isCustomScroll) {
+        if (backBottomAutoScroll) {
+          scrollToEnd({ animated: false, force: true });
+          // setNewCount(0);
+          // setShowBackBottom(false);
+        } else {
+          clearBackBottom();
+        }
+      }
 
       if (onBackBottomClick) {
         onBackBottomClick();
@@ -118,7 +151,10 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
     );
 
     const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-      checkShowBottomRef.current(e.target);
+      checkShowBottomRef.current(e.currentTarget);
+      /*if (!isCustomScroll) {
+        checkShowBottomRef.current(e.currentTarget);
+      }*/
 
       if (onScroll) {
         onScroll(e);
@@ -134,12 +170,17 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
     }, [showBackBottom]);
 
     useEffect(() => {
+      if (isCustomScroll) return;
+
       const scroller = scrollerRef.current;
       const wrapper = scroller && scroller.wrapperRef.current;
 
       if (!wrapper || !lastMessage || lastMessage.position === 'pop') {
         return;
       }
+
+      const prevLastMessageId = prevLastMessageIdRef.current;
+      prevLastMessageIdRef.current = lastMessage._id;
 
       if (lastMessage.position === 'right') {
         // 自己发的消息，强制滚动到底部
@@ -151,18 +192,21 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
         if (autoScrollToEnd) {
           const animated = !!wrapper.scrollTop;
           scrollToEnd({ animated, force: true });
+        } else if (prevLastMessageId && prevLastMessageId !== lastMessage._id) {
+          setNewCount((c) => c + 1);
+          setShowBackBottom(true);
         }
       } else {
         setNewCount((c) => c + 1);
         setShowBackBottom(true);
       }
-    }, [lastMessage, scrollToEnd, autoScrollToEnd]);
+    }, [isCustomScroll, lastMessage, scrollToEnd, autoScrollToEnd]);
 
     useEffect(() => {
-      if (!autoScrollToEnd) return;
+      if (!autoScrollToEnd || isCustomScroll) return;
 
       scrollToEnd();
-    }, [isTyping, scrollToEnd]);
+    }, [isTyping, scrollToEnd, autoScrollToEnd, isCustomScroll]);
 
     useEffect(() => {
       const wrapper = messagesRef.current!;
@@ -216,27 +260,33 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
           loadMoreText={loadMoreText}
           ref={scrollerRef}
         >
-          <div className="MessageList">
-            {messages.map((msg) => (
-              <Message
-                {...msg}
-                renderMessageContent={renderMessageContent}
-                onAvatarClick={onAvatarClick}
-                renderAvatarCard={renderAvatarCard}
-                avatarCardPlacement={avatarCardPlacement}
-                key={msg._id}
-              />
-            ))}
-            {isTyping && <Message type="typing" _id="typing" />}
-          </div>
+          <>
+            {topLoading && <div className="MessageContainer-loading MessageContainer-loading-top">{loadingText}</div>}
+            <div className="MessageList">
+              {messages.map((msg) => (
+                  <Message
+                    {...msg}
+                    renderMessageContent={renderMessageContent}
+                    onAvatarClick={onAvatarClick}
+                    renderAvatarCard={renderAvatarCard}
+                    avatarCardPlacement={avatarCardPlacement}
+                    key={msg._id}
+                  />
+                ))}
+              {isTyping && <Message type="typing" _id="typing" />}
+            </div>
+            {bottomLoading && <div className="MessageContainer-loading MessageContainer-loading-bottom">{loadingText}</div>}
+          </>
         </PullToRefresh>
-        {showBackBottom && (
-          <BackBottom
-            count={newCount}
-            onClick={handleBackBottomClick}
-            onDidMount={onBackBottomShow}
-          />
-        )}
+        {(showBackBottom || hasUnreadMessages) && (
+            <BackBottom
+              count={newCount}
+              showCount={backBottomShowCount}
+              unreadText={hasUnreadMessages ? backBottomUnreadText : undefined}
+              onClick={handleBackBottomClick}
+              onDidMount={onBackBottomShow}
+            />
+          )}
       </div>
     );
   },

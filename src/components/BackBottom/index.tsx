@@ -7,12 +7,14 @@ interface BackBottomProps {
   count: number;
   onClick: () => void;
   onDidMount?: () => void;
+  showCount?: boolean;
+  unreadText?: string;
 }
 
-export const BackBottom = ({ count, onClick, onDidMount }: BackBottomProps) => {
+export const BackBottom = ({ count, onClick, onDidMount, showCount = true, unreadText }: BackBottomProps) => {
   const { trans } = useLocale('BackBottom');
-  let text = trans('bottom');
-  if (count) {
+  let text = unreadText || trans('bottom');
+  if (!unreadText && showCount && count) {
     text = trans(count === 1 ? 'newMsgOne' : 'newMsgOther').replace('{n}', count);
   }
 
