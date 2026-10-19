@@ -67,13 +67,25 @@ export const PullToRefresh = React.forwardRef<PullToRefreshHandle, PullToRefresh
     const [distance, setDistance] = useState(0);
     const [status, setStatus] = useState<PullToRefreshStatus>('pending');
     const [dropped, setDropped] = useState(false);
-    const [disabled, setDisabled] = useState(!props.onRefresh);
+    const [disabled, setDisabled] = useState(!onRefresh);
+    const hasRefresh = Boolean(onRefresh);
+
+    const prevHasRefreshRef = useRef(hasRefresh);
     const sharedRef = useRef<any>({});
     const statusRef = useRef<PullToRefreshStatus>(status);
     const timer1 = useRef<ReturnType<typeof setTimeout>>();
     const timer2 = useRef<ReturnType<typeof setTimeout>>();
 
     const useFallback = !canUse('touch');
+
+    useEffect(() => {
+      if (prevHasRefreshRef.current === hasRefresh) {
+        return;
+      }
+
+      prevHasRefreshRef.current = hasRefresh;
+      setDisabled(!hasRefresh);
+    }, [hasRefresh]);
 
     useEffect(() => {
       statusRef.current = status;
@@ -227,6 +239,10 @@ export const PullToRefresh = React.forwardRef<PullToRefreshHandle, PullToRefresh
         setContentStyle(loadingDistance);
       }
     }, [loadingDistance, status, useFallback]);
+
+    useEffect(() => {
+      setDisabled(!onRefresh);
+    }, [onRefresh]);
 
     useImperativeHandle(
       ref,
