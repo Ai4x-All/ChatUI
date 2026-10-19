@@ -33,6 +33,7 @@ export interface MessageContainerProps {
   avatarCardPlacement?: MessageProps['avatarCardPlacement'];
 
   autoScrollToEnd?: boolean;
+  autoScrollToEndAnimated?: boolean;
 
   /** custom 模式下由外部接管消息滚动、分页和未读状态。 */
   scrollMode?: 'default' | 'custom';
@@ -77,6 +78,7 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
       renderAvatarCard,
       avatarCardPlacement,
       autoScrollToEnd = true,
+      autoScrollToEndAnimated = true,
       scrollMode = 'default',
       backBottomAutoScroll = true,
       backBottomShowCount = true,
@@ -186,11 +188,11 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
         // 自己发的消息，强制滚动到底部
         // scrollToEnd({ force: true });
         if (autoScrollToEnd) {
-          scrollToEnd({ force: true });
+          scrollToEnd({ animated: autoScrollToEndAnimated, force: true });
         }
       } else if (isNearBottom(wrapper, 2)) {
         if (autoScrollToEnd) {
-          const animated = !!wrapper.scrollTop;
+          const animated = autoScrollToEndAnimated && !!wrapper.scrollTop;
           scrollToEnd({ animated, force: true });
         } else if (prevLastMessageId && prevLastMessageId !== lastMessage._id) {
           setNewCount((c) => c + 1);
@@ -200,13 +202,13 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
         setNewCount((c) => c + 1);
         setShowBackBottom(true);
       }
-    }, [isCustomScroll, lastMessage, scrollToEnd, autoScrollToEnd]);
+    }, [isCustomScroll, lastMessage, scrollToEnd, autoScrollToEnd, autoScrollToEndAnimated]);
 
     useEffect(() => {
       if (!autoScrollToEnd || isCustomScroll) return;
 
-      scrollToEnd();
-    }, [isTyping, scrollToEnd, autoScrollToEnd, isCustomScroll]);
+      scrollToEnd({ animated: autoScrollToEndAnimated });
+    }, [isTyping, scrollToEnd, autoScrollToEnd, autoScrollToEndAnimated, isCustomScroll]);
 
     useEffect(() => {
       const wrapper = messagesRef.current!;

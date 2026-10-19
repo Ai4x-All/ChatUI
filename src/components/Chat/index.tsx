@@ -186,6 +186,7 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
     isX,
     tipsData=[],
     autoScrollToEnd = true,
+    autoScrollToEndAnimated = true,
     scrollMode,
     backBottomAutoScroll,
     backBottomShowCount,
@@ -260,6 +261,7 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
         <MessageContainer
           ref={messagesRef}
           autoScrollToEnd={autoScrollToEnd}
+          autoScrollToEndAnimated={autoScrollToEndAnimated}
           loadMoreText={loadMoreText}
           messages={messages}
           isTyping={isTyping}
