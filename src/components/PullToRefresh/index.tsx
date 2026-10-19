@@ -240,10 +240,6 @@ export const PullToRefresh = React.forwardRef<PullToRefreshHandle, PullToRefresh
       }
     }, [loadingDistance, status, useFallback]);
 
-    useEffect(() => {
-      setDisabled(!onRefresh);
-    }, [onRefresh]);
-
     useImperativeHandle(
       ref,
       () => ({
