@@ -157,6 +157,7 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
     renderMessageContent,
     onBackBottomShow,
     onBackBottomClick,
+    onUnreadClick,
     onAvatarClick,
     renderAvatarCard,
     avatarCardPlacement,
@@ -192,6 +193,8 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
     backBottomShowCount,
     hasUnreadMessages,
     backBottomUnreadText,
+    backBottomLoading,
+    unreadLoading,
     loadingText,
     topLoading,
     bottomLoading
@@ -271,6 +274,7 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
           onScroll={onScroll}
           onBackBottomShow={onBackBottomShow}
           onBackBottomClick={onBackBottomClick}
+          onUnreadClick={onUnreadClick}
           onAvatarClick={onAvatarClick}
           renderAvatarCard={renderAvatarCard}
           avatarCardPlacement={avatarCardPlacement}
@@ -279,6 +283,8 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
           backBottomShowCount={backBottomShowCount}
           hasUnreadMessages={hasUnreadMessages}
           backBottomUnreadText={backBottomUnreadText}
+          backBottomLoading={backBottomLoading}
+          unreadLoading={unreadLoading}
           loadingText={loadingText}
           topLoading={topLoading}
           bottomLoading={bottomLoading}

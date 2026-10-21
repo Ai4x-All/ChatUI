@@ -235,7 +235,7 @@ export default () => {
       setHasUnreadMessages(false);
     }
 
-    if (!refreshingRef.current && scroller.scrollTop <= 60) {
+    if (!refreshingRef.current && scroller.scrollTop <= 200) {
       loadOlderMessages(scroller);
     }
   }, [loadOlderMessages]);

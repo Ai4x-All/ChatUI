@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { useLocale } from '../ConfigProvider';
@@ -9,9 +9,12 @@ interface BackBottomProps {
   onDidMount?: () => void;
   showCount?: boolean;
   unreadText?: string;
+  loading?: boolean;
+  disabled?: boolean;
+  className?: string;
 }
 
-export const BackBottom = ({ count, onClick, onDidMount, showCount = true, unreadText }: BackBottomProps) => {
+export const BackBottom = ({ count, onClick, onDidMount, showCount = true, unreadText, loading = false, disabled = false, className }: BackBottomProps) => {
   const { trans } = useLocale('BackBottom');
   let text = unreadText || trans('bottom');
   if (!unreadText && showCount && count) {
@@ -25,10 +28,10 @@ export const BackBottom = ({ count, onClick, onDidMount, showCount = true, unrea
   }, [onDidMount]);
 
   return (
-    <div className="BackBottom">
-      <Button className="slide-in-right-item" onClick={onClick}>
+    <div className={`BackBottom ${className || ''}`}>
+      <Button className="slide-in-right-item" onClick={onClick} loading={loading} disabled={disabled || loading}>
         {text}
-        <Icon type="chevron-double-down" />
+        {!loading && <Icon type="chevron-double-down" />}
       </Button>
     </div>
   );

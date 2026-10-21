@@ -42,14 +42,18 @@ export interface MessageContainerProps {
   backBottomAutoScroll?: boolean;
   /** 回到底部是否显示未读数量 */
   backBottomShowCount?: boolean;
-  /** 进入会话是否已有未读消息 */
+  /** 进入会话是否已有未读消息的最早未读 */
   hasUnreadMessages?: boolean;
   backBottomUnreadText?: string;
 
+  backBottomLoading?: boolean;
+
+  unreadLoading?: boolean;
   /** 自定加载提示 */
-  loadingText?: string;
   topLoading?: boolean;
   bottomLoading?: boolean;
+
+  onUnreadClick?: () => void;
 }
 
 export interface MessageContainerHandle {
@@ -74,6 +78,7 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
       renderMessageContent,
       onBackBottomShow,
       onBackBottomClick,
+      onUnreadClick,
       onAvatarClick,
       renderAvatarCard,
       avatarCardPlacement,
@@ -85,6 +90,8 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
       hasUnreadMessages = false,
       backBottomUnreadText,
       loadingText = '数据加载中...',
+      backBottomLoading = false,
+      unreadLoading = false,
       topLoading = false,
       bottomLoading = false
     } = props;
@@ -263,7 +270,7 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
           ref={scrollerRef}
         >
           <>
-            {topLoading && <div className="MessageContainer-loading MessageContainer-loading-top">{loadingText}</div>}
+            {topLoading && <div className="MessageContainer-loading ">{loadingText}</div>}
             <div className="MessageList">
               {messages.map((msg) => (
                   <Message
@@ -277,18 +284,31 @@ export const MessageContainer = React.forwardRef<MessageContainerHandle, Message
                 ))}
               {isTyping && <Message type="typing" _id="typing" />}
             </div>
-            {bottomLoading && <div className="MessageContainer-loading MessageContainer-loading-bottom">{loadingText}</div>}
+            {bottomLoading && <div className="MessageContainer-loading">{loadingText}</div>}
           </>
         </PullToRefresh>
-        {(showBackBottom || hasUnreadMessages) && (
+        {(showBackBottom || backBottomLoading) && (
             <BackBottom
               count={newCount}
               showCount={backBottomShowCount}
-              unreadText={hasUnreadMessages ? backBottomUnreadText : undefined}
               onClick={handleBackBottomClick}
               onDidMount={onBackBottomShow}
+              loading={backBottomLoading}
+              disabled={unreadLoading}
+        />)}
+        {
+          hasUnreadMessages && (
+            <BackBottom
+              count={0}
+              showCount={false}
+              unreadText={backBottomUnreadText}
+              onClick={() => (onUnreadClick ? onUnreadClick() : handleBackBottomClick())}
+              loading={unreadLoading}
+              disabled={backBottomLoading}
+              className={(showBackBottom || backBottomLoading) ? 'BackBottom-unread BackBottom-unread-stack' : 'BackBottom-unread'}
             />
-          )}
+          )
+        }
       </div>
     );
   },
