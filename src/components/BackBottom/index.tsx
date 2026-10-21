@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { useLocale } from '../ConfigProvider';
@@ -28,7 +28,7 @@ export const BackBottom = ({ count, onClick, onDidMount, showCount = true, unrea
   }, [onDidMount]);
 
   return (
-    <div className={`BackBottom ${className || ''}`}>
+    <div className={'BackBottom ' + (className || '')}>
       <Button className="slide-in-right-item" onClick={onClick} loading={loading} disabled={disabled || loading}>
         {text}
         {!loading && <Icon type="chevron-double-down" />}

@@ -53,6 +53,8 @@ export interface MessageContainerProps {
   topLoading?: boolean;
   bottomLoading?: boolean;
 
+  loadingText?: string;
+
   onUnreadClick?: () => void;
 }
 
